@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default props => (
-    <div className = {props.typeInput}>
-        <i className = {props.icon} >{props.nameIcon}</i>
-        <input {...props.input} id = {props.id} type={props.type} className={props.class}/>
-        <label htmlFor={props.name}>{props.label}</label>
+    <div className={props.typeInput}>
+        <i className="material-icons prefix">{props.icone}</i>
+        <input id={props.idAndFor} type={props.type}/>
+        <label htmlFor={props.idAndFor}>{props.label}</label>
     </div>
 
 )

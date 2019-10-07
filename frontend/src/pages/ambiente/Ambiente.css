@@ -1,0 +1,18 @@
+.container{
+    margin-top: 200px;
+}
+.radioPI h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+.radioPI label {
+    margin-left: 10px;
+}
+#botoes {
+    margin-right: 20px;
+}
+
+#painel .input-field{
+   padding-right: 40px;
+   margin-bottom: 30px;
+}
