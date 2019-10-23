@@ -2,18 +2,25 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 
 import './Ambiente.css';
-
+import M from 'materialize-css/dist/js/materialize.min.js';
 import InputAndLabel from '../../componentes/common/InputAndLabel';
 import Button from '../../componentes/common/button';
 
 export default class Ambiente extends Component {
+    componentDidMount() {
+        M.AutoInit();
+    }
     render() {
         return (
-            <div className="row container z-depth-2">
-                <form>
-                    <div className="col m12" id="painel">
-                        <h1>Cadastro de Ambiente</h1>
-                        <div className="row">
+            <div className="row">
+                <div className="right-align" id="botaoAdd">
+                    <a className="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal"><i className="material-icons">add</i></a>
+                </div>
+
+                <div id="modal" className="modal modal-fixed-footer">
+                    <div className="modal-content">
+                        <form>
+                            <h1>Cadastro de Ambiente</h1>
                             <Field name="nome" component={InputAndLabel}
                                 icone='home' idAndFor='nome'
                                 type='text' label='Nome do Ambiente'
@@ -47,17 +54,18 @@ export default class Ambiente extends Component {
                                     </label>
                                 </p>
                             </div>
-
-                            <div className='row right-align' id='botoes'>
-                                <Button class='waves-effect waves-light btn'
-                                    icone='arrow_back' name='Voltar' />
-                                <Button class='waves-effect waves-light btn'
-                                    icone='send' name='Cadastrar' />
-                            </div>
-
+                        </form>
+                    </div>
+                    <div className="modal-footer">
+                        <div className='right-align' id='botoes'>
+                            <Button class='waves-effect waves-light btn modal-close'
+                                icone='clear' name='Cancelar' />
+                            <Button class='waves-effect waves-light btn'
+                                icone='send' name='Cadastrar' />
                         </div>
                     </div>
-                </form>
+
+                </div>
             </div>
         )
     }

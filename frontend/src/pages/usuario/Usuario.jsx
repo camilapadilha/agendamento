@@ -15,12 +15,16 @@ export default class Usuario extends Component {
     }
     render() {
         return (
-            <div className=' row z-depth-2 container'>
-                <form className='col m12'>
-                    <h1>Cadastro de Usuário</h1>
-                    <div className='row z-depth-1' id='painel'>
+            <div className="row">
+                <div className="right-align" id="botaoAdd">
+                    <a className="modal-trigger" href="#modal">Cadastre-se</a>
+                </div>
 
-                        <div className='row'>
+                <div id="modal" className="modal modal-fixed-footer">
+                    <div className="modal-content">
+
+                        <h1>Cadastro de Usuário</h1>
+                        <div id='painel'>
                             <h1>Dados Pessoais</h1>
 
                             <Field name="nome" component={InputAndLabel}
@@ -36,6 +40,7 @@ export default class Usuario extends Component {
                                 icone='phone' idAndFor='celular'
                                 type='text' label='Celular'
                                 typeInput='input-field col m4' />
+
                             <div id='centralizar'>
                                 <Field name="emailPessoal" component={InputAndLabel}
                                     icone='contact_mail' idAndFor='emailPessoal'
@@ -49,47 +54,49 @@ export default class Usuario extends Component {
 
                             </div>
 
+                            <div id='disciplinas'>
+                                <h1>Disciplinas</h1>
+                                <Field name='Disciplinas' component={Checkbox}
+                                    span='Matemática' />
+                                <Field name='Disciplinas' component={Checkbox}
+                                    span='Português' />
+                                <Field name='Disciplinas' component={Checkbox}
+                                    span='História' />
+                                <Field name='Disciplinas' component={Checkbox}
+                                    span='Filosofia' />
+                                <Field name='Disciplinas' component={Checkbox}
+                                    span='Química' />
+                            </div>
+
                         </div>
-                        <div className='row' id='disciplinas'>
-                            <h1>Disciplinas</h1>
-                            <Field name='Disciplinas' component={Checkbox}
-                                span='Matemática' />
-                            <Field name='Disciplinas' component={Checkbox}
-                                span='Português' />
-                            <Field name='Disciplinas' component={Checkbox}
-                                span='História' />
-                            <Field name='Disciplinas' component={Checkbox}
-                                span='Filosofia' />
-                            <Field name='Disciplinas' component={Checkbox}
-                                span='Química' />
+
+                        <div id='painel'>
+                            <h1>Dados de Acesso</h1>
+
+                            <Field name="emailInstitucional" component={InputAndLabel}
+                                icone='mail_outline' idAndFor='emailInstitucional'
+                                type='text' label='Email Institucional'
+                                typeInput='input-field col m4' />
+                            <Field name="senha" component={InputAndLabel}
+                                icone='lock_outline' idAndFor='senha'
+                                type='password' label='Senha'
+                                typeInput='input-field col m4' />
+                            <Field name="confirmarSenha" component={InputAndLabel}
+                                icone='lock_outline' idAndFor='confirmarSenha'
+                                type='password' label='Confirmar Senha'
+                                typeInput='input-field col m4' />
                         </div>
-
                     </div>
-
-                    <div className='row z-depth-1' id='painel'>
-                        <h1>Dados de Acesso</h1>
-
-                        <Field name="emailInstitucional" component={InputAndLabel}
-                            icone='mail_outline' idAndFor='emailInstitucional'
-                            type='text' label='Email Institucional'
-                            typeInput='input-field col m4' />
-                        <Field name="senha" component={InputAndLabel}
-                            icone='lock_outline' idAndFor='senha'
-                            type='password' label='Senha'
-                            typeInput='input-field col m4' />
-                        <Field name="confirmarSenha" component={InputAndLabel}
-                            icone='lock_outline' idAndFor='confirmarSenha'
-                            type='password' label='Confirmar Senha'
-                            typeInput='input-field col m4' />
+                    <div className="modal-footer">
+                        <div className='right-align' id='botoes'>
+                            <Button class='waves-effect waves-light btn modal-close'
+                                icone='clear' name='Cancelar' />
+                            <Button class='waves-effect waves-light btn'
+                                icone='send' name='Cadastrar' />
+                        </div>
                     </div>
-                    <div className='row right-align' id='botoes'>
-                        <Button class='waves-effect waves-light btn'
-                        icone='arrow_back' name='Voltar'/>
-                        <Button class='waves-effect waves-light btn'
-                        icone='send' name='Cadastrar'/>
-                    </div>
-                </form>
-            </div >
+                </div>
+            </div>
         )
     }
 }
