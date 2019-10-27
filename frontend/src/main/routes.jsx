@@ -9,20 +9,22 @@ import EquipamentoList from '../pages/equipamento/EquipamentoList';
 import DisciplinaList from '../pages/disciplina/DisciplinaList';
 import FuncaoList from '../pages/funcao/FuncaoList';
 import Agendamento from '../pages/agendamento/Agendamento.jsx';
+import Nav from '../componentes/layout/Nav';
 
 
 export default function Routes() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path='/' exact component={Login} />
-                <Route path='/usuario' component={Usuario} />
-                <Route path='/dashboard' component={Dashboard} />
-                <Route path='/ambienteList' component={AmbienteList} />
-                <Route path='/equipamentoList' component={EquipamentoList} />
-                <Route path='/disciplinaList' component={DisciplinaList} />
-                <Route path='/funcaoList' component={FuncaoList} />
-                <Route path='/agendamento' component={Agendamento} />
+                <Route path='/login' exact component={Login} />
+                <Route path='/app' component={Nav} />
+                <Route path='/app/usuario' component={Usuario} />
+                <Route path='/app/dashboard' component={Dashboard} />
+                <Route path='/app/ambienteList' component={AmbienteList} />
+                <Route path='/app/equipamentoList' component={EquipamentoList} />
+                <Route path='/app/disciplinaList' component={DisciplinaList} />
+                <Route path='/app/funcaoList' component={FuncaoList} />
+                <Route path='/app/agendamento' component={Agendamento} />
                 {/* <Redirect from='*' to='/' /> */}
             </Switch>
         </BrowserRouter>
