@@ -9,7 +9,7 @@ import Td from '../../componentes/list/td';
 export default class DisciplinaList extends Component {
     render() {
         return (
-            <Table titulo="Listagem de Função"
+            <Table titulo="Listagem de Disciplina"
             headers={(
                 <Th cabecalho="Nome"/>
             )}

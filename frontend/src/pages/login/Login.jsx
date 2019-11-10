@@ -11,6 +11,9 @@ export default class Login extends Component {
     //     const {history} = this.props;
     //     history.push('/usuario');
     // }
+
+    
+
     render() {
         return (
             <div className='row'>
@@ -36,7 +39,7 @@ export default class Login extends Component {
                                         label='Senha' />
                                 </div>
 
-                                <button type="submit" className="waves-effect waves-light btn" >Logar</button>
+                                <a className="waves-effect waves-light btn" href="app/dashboard">Logar</a>
 
                                 <div id="cadastrar" className="row">
                                     <Usuario/>

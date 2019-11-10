@@ -15,9 +15,9 @@ import Nav from '../componentes/layout/Nav';
 export default function Routes() {
     return (
         <BrowserRouter>
+            <Route path='/app' component={Nav} />
+            <Route path='/' exact component={Login} />
             <Switch>
-                <Route path='/login' exact component={Login} />
-                <Route path='/app' component={Nav} />
                 <Route path='/app/usuario' component={Usuario} />
                 <Route path='/app/dashboard' component={Dashboard} />
                 <Route path='/app/ambienteList' component={AmbienteList} />
