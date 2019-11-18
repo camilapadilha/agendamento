@@ -3,6 +3,7 @@ import { reduxForm } from 'redux-form';
 
 // import Select from '../../componentes/common/Select';
 // import Option from '../../componentes/common/Option';
+import TableAgenda from '../../componentes/common/TableAgenda';
 import M from 'materialize-css';
 
 import './agendamento.css';
@@ -14,7 +15,7 @@ export default class Agendamento extends Component {
             mesSelecionado: new Date().getMonth(),
             ano: new Date().getFullYear(),
             periodo: 'Matutino',
-            laboratorio: ''
+            laboratorio: 'Laboratório 1'
         };
         this.handlerMonth = this.handlerMonth.bind(this);
         this.handlerPeriodo = this.handlerPeriodo.bind(this);
@@ -112,6 +113,7 @@ export default class Agendamento extends Component {
                                     <h1>Laboratório 1</h1>
                                     <h1>Novembro/{this.state.ano} - {this.state.periodo}</h1>
                                 </div>
+                                <TableAgenda renderLinha={this.renderRowsDia().bind(this)}/>
 
                                 <table className="centered tableAgenda">
                                     <thead>

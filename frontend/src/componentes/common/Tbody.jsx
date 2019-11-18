@@ -1,25 +1,28 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import tr from '../list/tr'
 
 export default class Tbody extends Component {
-    renderColumns() {
-        for (const c = 1; c <= 5; c++) {
-            document.write('<tr>');
-            for (const l = 1; l <= 7; l++) {
-                if (l[0]) {
-                    <td>{l}</td>
-                }
-                else {
-                    <td></td>
-                }
+    renderLinhas() {
+        for (let l = 1; l <= 7; l++) {
+            if (l[0]) {
+                document.write(<td>{l}</td>)
             }
-            document.write('</tr>');
+            else {
+                document.write(<td></td>)
+            }
+        }
+    }
+
+    renderColumns() {
+        for (let c = 1; c <= 5; c++) {
+            document.write(<tr>{this.renderLinhas()}</tr>)
         }
     }
 
     render() {
         return (
-            <tbody> {renderColumns} </tbody>
+            <tbody> {this.renderColumns()} </tbody>
         )
 
     }
