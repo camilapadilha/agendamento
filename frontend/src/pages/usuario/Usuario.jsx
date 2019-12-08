@@ -9,7 +9,16 @@ import Checkbox from '../../componentes/common/checkbox';
 import Button from '../../componentes/common/button';
 import './Usuario.css';
 
+import "firebase/database";
+
 export default class Usuario extends Component {
+    constructor(){
+        super();
+        this.state = {
+            nome: '',
+            senha: '',
+        }
+    }
     componentDidMount() {
         M.AutoInit();
     }

@@ -113,7 +113,7 @@ export default class Agendamento extends Component {
                                     <h1>Laboratório 1</h1>
                                     <h1>Novembro/{this.state.ano} - {this.state.periodo}</h1>
                                 </div>
-                                <TableAgenda renderLinha={this.renderRowsDia().bind(this)}/>
+                                {/* <TableAgenda renderLinha={this.renderRowsDia().bind(this)}/> */}
 
                                 <table className="centered tableAgenda">
                                     <thead>
