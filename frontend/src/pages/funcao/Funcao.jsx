@@ -6,10 +6,22 @@ import InputAndLabel from '../../componentes/common/InputAndLabel';
 import Button from '../../componentes/common/button';
 
 import './funcao.css';
+// import Api from '../../../../backend/src/Api.jsx';
 
 export default class Funcao extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            nome: '',
+        }
+        this.handleClick = this.handleClick.bind(this);
+    }
     componentDidMount() {
         M.AutoInit();
+        // const teste = Api.buscar();
+        // console.log('teste', teste);
+
     }
     render() {
         return (
@@ -24,16 +36,19 @@ export default class Funcao extends Component {
                             <div className="col m12" id="painel">
                                 <h1>Cadastro de Função</h1>
                                 <div className="row">
-                                    <Field name="nome" component={InputAndLabel}
+                                    <InputAndLabel
                                         icone='person' idAndFor='nome'
                                         type='text' label='Nome'
-                                        typeInput='input-field col m4' />
+                                        typeInput='input-field col m4'
+                                        onChange={event => this.setState({ nome: event.target.value })}
+                                        value={this.state.nome} />
                                 </div>
                                 <div className='row right-align' id='botoes'>
                                     <Button class='waves-effect waves-light btn modal-close'
                                         icone='clear' name='Cancelar' />
                                     <Button class='waves-effect waves-light btn'
-                                        icone='send' name='Cadastrar' />
+                                        icone='send' name='Cadastrar'
+                                        onClick={() => this.handleClick()} />
                                 </div>
 
                             </div>
