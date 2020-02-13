@@ -17,12 +17,15 @@ export default class Funcao extends Component {
         }
         this.handleClick = this.handleClick.bind(this);
     }
+    
     componentDidMount() {
         M.AutoInit();
-        // const teste = Api.buscar();
-        // console.log('teste', teste);
-
     }
+
+    handleClick() {
+        console.log("aeeee");
+    }
+
     render() {
         return (
             <div className="row">

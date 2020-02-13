@@ -1,45 +1,70 @@
+const controller = require('./controller/funcaoController');
 const express = require('express');
-const Controller = require('./controller/controller');
+const routes = express();
 
-module.exports = (class Routes {
-    constructor(server) {
-        this.server = server;
-        this.controler = new Controller();
-    }
-
-    ativarRotaSalvar(server) {
-        server.post('/salvar', async (req, res) => {
-            try {
-                const id = await this.controler.salvar(req.body.tabela,
-                    req.body.pk,
-                    req.body.entidade);
-                res.send({
-                    status: true,
-                    dados: id,
-                });
-            } catch (error) {
-                res.send({
-                    status: false,
-                    erro: error,
-                });
-            }
+routes.get('/buscar', async (req, res) => {
+    try {
+        const ret = await controller.buscar();
+        res.send({
+            status: true,
+            dados: ret,
         });
-    }
-
-    ativarRotaBuscar(server) {
-        server.get('/buscar', async (req, res) => {
-            try {
-                const ret = await this.controler.buscar(req.body.tabela);
-                res.send({
-                    status: true,
-                    dados: ret,
-                });
-            } catch (error) {
-                res.send({
-                    status: false,
-                    erro: error,
-                });
-            }
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
         });
     }
 });
+routes.post('/salvar', async (req, res) => {
+    try {
+        console.log("Controller");
+        const id = await this.controler.salvar(req.body.tabela,
+            req.body.pk,
+            req.body.entidade);
+        res.send({
+            status: true,
+            dados: entidede,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+module.exports = routes;
+// })
+
+// module.exports = app
+// app.get('/buscar', (req, res) => {
+//     const ret = con.query("select * from funcao", (err, rows, fields) => {
+//         if (!err)
+//             res.send(rows);
+//         else
+//             console.log(err);
+//     });
+//     return ret;
+// })
+// }
+
+
+    //     ativarRotaSalvar(server) {
+    //         server.post('/salvar', async (req, res) => {
+    //             try {
+    //                 const id = await this.controler.salvar(req.body.tabela,
+    //                     req.body.pk,
+    //                     req.body.entidade);
+    //                 res.send({
+    //                     status: true,
+    //                     dados: id,
+    //                 });
+    //             } catch (error) {
+    //                 res.send({
+    //                     status: false,
+    //                     erro: error,
+    //                 });
+    //             }
+    //         });
+    //     }
+

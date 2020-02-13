@@ -1,11 +1,12 @@
 const sqlUtil = require ('mysql')
+const co = require ('co')
 
-function query(sql, params, connection) {
+ function query(sql, params, connection) {
     return new Promise((resolve, reject) => {
         co(function* () {
             let conn = connection;
             if (!conn) {
-                conn = yield getConnection();
+                conn = yield sqlUtil.getConnection();
             }
             conn.query(sql, params, (err2, res) => {
                 if (!connection) {
@@ -20,3 +21,5 @@ function query(sql, params, connection) {
         }).catch(console.log);
     });
 }
+
+module.exports = query

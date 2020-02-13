@@ -2,8 +2,8 @@ import axios from 'axios'
 
 export default class Api {
     
-    static async buscar(tabela) {
-        return await axios.get('http://localhost:4000/api/buscar', { tabela });
+    static async buscar() {
+        return await axios.get('http://localhost:4000/buscar');
     }
 
     static async salvar(tabela, pk, entidade) {
