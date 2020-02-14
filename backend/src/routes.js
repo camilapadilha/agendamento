@@ -17,14 +17,16 @@ routes.get('/buscar', async (req, res) => {
     }
 });
 routes.post('/salvar', async (req, res) => {
+    let dados = req.body;
+    if (req.url.includes('?')) {
+        dados = await req.query;
+    }
     try {
-        console.log("Controller");
-        const id = await this.controler.salvar(req.body.tabela,
-            req.body.pk,
-            req.body.entidade);
+        const id = await controller.salvar(dados);
+
         res.send({
             status: true,
-            dados: entidede,
+            dados: dados,
         });
     } catch (error) {
         res.send({

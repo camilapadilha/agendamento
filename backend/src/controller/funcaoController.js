@@ -20,7 +20,8 @@ module.exports = {
     salvar(entidade) {
         return new Promise((resolve, reject) => {
             console.log("entidade", entidade);
-            con.query(`insert into funcao nome values ${entidade.nome}`, (err, rows, fields) => {
+            let query = "";
+            query = con.query('insert into funcao set ? ', entidade, (err, rows, fields) => {
                 if (!err) {
                     console.log("rows", rows);
                     console.log("fields", fields);

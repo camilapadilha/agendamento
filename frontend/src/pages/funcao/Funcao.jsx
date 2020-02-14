@@ -6,6 +6,7 @@ import InputAndLabel from '../../componentes/common/InputAndLabel';
 import Button from '../../componentes/common/button';
 
 import './funcao.css';
+import Api from '../../Api';
 // import Api from '../../../../backend/src/Api.jsx';
 
 export default class Funcao extends Component {
@@ -17,13 +18,13 @@ export default class Funcao extends Component {
         }
         this.handleClick = this.handleClick.bind(this);
     }
-    
+
     componentDidMount() {
         M.AutoInit();
     }
 
     handleClick() {
-        console.log("aeeee");
+        Api.salvar()
     }
 
     render() {
