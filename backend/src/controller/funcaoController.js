@@ -19,7 +19,7 @@ module.exports = {
 
     salvar(entidade) {
         return new Promise((resolve, reject) => {
-            console.log("entidade", entidade);
+            console.log("entidade", entidade);            
             let query = "";
             query = con.query('insert into funcao set ? ', entidade, (err, rows, fields) => {
                 if (!err) {

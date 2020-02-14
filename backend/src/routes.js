@@ -22,7 +22,7 @@ routes.post('/salvar', async (req, res) => {
         dados = await req.query;
     }
     try {
-        const id = await controller.salvar(dados);
+        const id = await controller.salvar(dados.entidade);
 
         res.send({
             status: true,

@@ -14,7 +14,9 @@ export default class Funcao extends Component {
     constructor() {
         super();
         this.state = {
-            nome: '',
+            dados: {
+                nome: '',
+            }
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -23,8 +25,14 @@ export default class Funcao extends Component {
         M.AutoInit();
     }
 
-    handleClick() {
-        Api.salvar()
+    async handleClick() {
+       const salvar = await Api.salvar(this.state.dados);
+        if(salvar.status == true){
+            this.setState({
+                dados: {}
+            });
+            this.modal.hide();
+        }
     }
 
     render() {
@@ -44,8 +52,12 @@ export default class Funcao extends Component {
                                         icone='person' idAndFor='nome'
                                         type='text' label='Nome'
                                         typeInput='input-field col m4'
-                                        onChange={event => this.setState({ nome: event.target.value })}
-                                        value={this.state.nome} />
+                                        onChange={event => this.setState({ 
+                                            dados: { 
+                                                nome: event.target.value 
+                                            }
+                                         })}
+                                        value={this.state.dados.nome} />
                                 </div>
                                 <div className='row right-align' id='botoes'>
                                     <Button class='waves-effect waves-light btn modal-close'

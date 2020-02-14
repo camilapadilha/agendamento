@@ -6,8 +6,8 @@ export default class Api {
         return await axios.get('http://localhost:4000/buscar');
     }
 
-    static async salvar(tabela, pk, entidade) {
-        return await axios.post('/salvar', { tabela, pk, entidade });
+    static async salvar(entidade) {
+        return await axios.post('http://localhost:4000/salvar', { entidade });
     }
 
     static async excluir(tabela, pk, entidade) {
