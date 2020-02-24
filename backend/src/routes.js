@@ -22,7 +22,26 @@ routes.post('/salvar', async (req, res) => {
         dados = await req.query;
     }
     try {
-        const id = await controller.salvar(dados.entidade);
+        await controller.salvar(dados.entidade);
+
+        res.send({
+            status: true,
+            dados: dados,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+routes.post('/excluir', async (req, res) => {
+    let dados = req.body;
+    if (req.url.includes('?')) {
+        dados = await req.query;
+    }
+    try {
+        await controller.excluir(dados.entidade);
 
         res.send({
             status: true,
@@ -36,37 +55,3 @@ routes.post('/salvar', async (req, res) => {
     }
 });
 module.exports = routes;
-// })
-
-// module.exports = app
-// app.get('/buscar', (req, res) => {
-//     const ret = con.query("select * from funcao", (err, rows, fields) => {
-//         if (!err)
-//             res.send(rows);
-//         else
-//             console.log(err);
-//     });
-//     return ret;
-// })
-// }
-
-
-    //     ativarRotaSalvar(server) {
-    //         server.post('/salvar', async (req, res) => {
-    //             try {
-    //                 const id = await this.controler.salvar(req.body.tabela,
-    //                     req.body.pk,
-    //                     req.body.entidade);
-    //                 res.send({
-    //                     status: true,
-    //                     dados: id,
-    //                 });
-    //             } catch (error) {
-    //                 res.send({
-    //                     status: false,
-    //                     erro: error,
-    //                 });
-    //             }
-    //         });
-    //     }
-

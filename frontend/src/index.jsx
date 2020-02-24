@@ -8,7 +8,6 @@ import { createStore } from 'redux'
 
 import reducers from './main/reducers';
 
-
 const store = (createStore) (reducers)
 
 ReactDOM.render(

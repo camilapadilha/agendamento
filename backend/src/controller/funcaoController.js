@@ -19,12 +19,30 @@ module.exports = {
 
     salvar(entidade) {
         return new Promise((resolve, reject) => {
-            console.log("entidade", entidade);            
             let query = "";
-            query = con.query('insert into funcao set ? ', entidade, (err, rows, fields) => {
+            let sql = "";
+            if (entidade.id_funcao) {
+                sql = `update funcao set ? where id_funcao = ${entidade.id_funcao}`;
+            } else {
+                sql = 'insert into funcao set ? ';
+            }
+            query = con.query(sql, entidade, (err, rows, fields) => {
                 if (!err) {
-                    console.log("rows", rows);
-                    console.log("fields", fields);
+                    resolve(rows);
+                }
+                else {
+                    console.log("errooo", err);
+                }
+            });
+        });
+    },
+
+    excluir(entidade) {
+        return new Promise((resolve, reject) => {
+            let query = "";
+            let sql = `delete from funcao where id_funcao = ${entidade.id_funcao}`;
+            query = con.query(sql, entidade, (err, rows, fields) => {
+                if (!err) {
                     resolve(rows);
                 }
                 else {

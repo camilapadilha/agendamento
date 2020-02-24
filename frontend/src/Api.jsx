@@ -10,7 +10,7 @@ export default class Api {
         return await axios.post('http://localhost:4000/salvar', { entidade });
     }
 
-    static async excluir(tabela, pk, entidade) {
-        return await axios.post('/excluir', { tabela, pk, entidade });
+    static async excluir(entidade) {
+        return await axios.post('http://localhost:4000/excluir', { entidade });
     }
 }

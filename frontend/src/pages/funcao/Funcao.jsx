@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
+import { clickButtonEdit } from './funcaoActions';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import InputAndLabel from '../../componentes/common/InputAndLabel';
 import Button from '../../componentes/common/button';
 
 import './funcao.css';
 import Api from '../../Api';
-// import Api from '../../../../backend/src/Api.jsx';
 
-export default class Funcao extends Component {
+class Funcao extends Component {
 
     constructor() {
         super();
         this.state = {
             dados: {
+                id_funcao: '',
                 nome: '',
-            }
+            },
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -26,16 +29,28 @@ export default class Funcao extends Component {
     }
 
     async handleClick() {
-       const salvar = await Api.salvar(this.state.dados);
-        if(salvar.status == true){
-            this.setState({
-                dados: {}
-            });
-            this.modal.hide();
-        }
+        await Api.salvar(this.state.dados);
+        this.setState({
+            dados: {
+                id_funcao: '',
+                nome: '',
+            },
+        });
     }
 
     render() {
+        const { clickButtonEdit, funcao } = this.props;
+
+        if (this.props.funcao.acao == 'edit') {
+            this.setState({
+                dados: {
+                    id_funcao: this.props.funcao.value.id_funcao,
+                    nome: this.props.funcao.value.nome,
+                },
+            });
+            clickButtonEdit('', '');
+        }
+
         return (
             <div className="row">
                 <div className="right-align" id="botaoAdd">
@@ -52,21 +67,21 @@ export default class Funcao extends Component {
                                         icone='person' idAndFor='nome'
                                         type='text' label='Nome'
                                         typeInput='input-field col m4'
-                                        onChange={event => this.setState({ 
-                                            dados: { 
-                                                nome: event.target.value 
+                                        onChange={event => this.setState({
+                                            dados: {
+                                                ...this.state.dados,
+                                                nome: event.target.value
                                             }
-                                         })}
+                                        })}
                                         value={this.state.dados.nome} />
                                 </div>
                                 <div className='row right-align' id='botoes'>
                                     <Button class='waves-effect waves-light btn modal-close'
                                         icone='clear' name='Cancelar' />
-                                    <Button class='waves-effect waves-light btn'
+                                    <Button class='waves-effect waves-light btn modal-close'
                                         icone='send' name='Cadastrar'
                                         onClick={() => this.handleClick()} />
                                 </div>
-
                             </div>
                         </form>
                     </div>
@@ -77,3 +92,6 @@ export default class Funcao extends Component {
 }
 
 Funcao = reduxForm({ form: 'Funcao' })(Funcao)
+const mapStateToProps = store => ({ funcao: store.funcaoReducer.funcao })
+const mapDispatchToProps = dispatch => bindActionCreators({ clickButtonEdit }, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(Funcao)

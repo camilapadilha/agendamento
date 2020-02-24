@@ -60,7 +60,7 @@ export default class Ambiente extends Component {
                         <div className='right-align' id='botoes'>
                             <Button class='waves-effect waves-light btn modal-close'
                                 icone='clear' name='Cancelar' />
-                            <Button class='waves-effect waves-light btn'
+                            <Button class='waves-effect waves-light btn modal-close'
                                 icone='send' name='Cadastrar' />
                         </div>
                     </div>

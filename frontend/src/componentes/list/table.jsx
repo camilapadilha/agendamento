@@ -9,7 +9,7 @@ export default props => (
                 <h1>{props.titulo}</h1>
                 <table className="responsive-table">
                     <thead>
-                        {props.headers}
+                        {props.header}
                     </thead>
                     <tbody>
                         {props.children}
