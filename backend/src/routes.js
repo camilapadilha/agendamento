@@ -1,10 +1,11 @@
-const controller = require('./controller/funcaoController');
+const funcaoController = require('./controllers/funcaoController');
+const disciplinaController = require('./controllers/disciplinaController');
 const express = require('express');
 const routes = express();
 
-routes.get('/buscar', async (req, res) => {
+routes.get('/buscarFuncao', async (req, res) => {
     try {
-        const ret = await controller.buscar();
+        const ret = await funcaoController.buscar();
         res.send({
             status: true,
             dados: ret,
@@ -16,13 +17,13 @@ routes.get('/buscar', async (req, res) => {
         });
     }
 });
-routes.post('/salvar', async (req, res) => {
+routes.post('/salvarFuncao', async (req, res) => {
     let dados = req.body;
     if (req.url.includes('?')) {
         dados = await req.query;
     }
     try {
-        await controller.salvar(dados.entidade);
+        await funcaoController.salvar(dados.entidade);
 
         res.send({
             status: true,
@@ -35,13 +36,66 @@ routes.post('/salvar', async (req, res) => {
         });
     }
 });
-routes.post('/excluir', async (req, res) => {
+routes.post('/excluirFuncao', async (req, res) => {
     let dados = req.body;
     if (req.url.includes('?')) {
         dados = await req.query;
     }
     try {
-        await controller.excluir(dados.entidade);
+        await funcaoController.excluir(dados.entidade);
+
+        res.send({
+            status: true,
+            dados: dados,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+
+routes.get('/buscarDisciplina', async (req, res) => {
+    try {
+        const ret = await disciplinaController.buscar();
+        res.send({
+            status: true,
+            dados: ret,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+routes.post('/salvarDisciplina', async (req, res) => {
+    let dados = req.body;
+    if (req.url.includes('?')) {
+        dados = await req.query;
+    }
+    try {
+        await disciplinaController.salvar(dados.entidade);
+
+        res.send({
+            status: true,
+            dados: dados,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+routes.post('/excluirDisciplina', async (req, res) => {
+    let dados = req.body;
+    if (req.url.includes('?')) {
+        dados = await req.query;
+    }
+    try {
+        await disciplinaController.excluir(dados.entidade);
 
         res.send({
             status: true,

@@ -29,7 +29,7 @@ class Funcao extends Component {
     }
 
     async handleClick() {
-        await Api.salvar(this.state.dados);
+        await Api.salvarFuncao(this.state.dados);
         this.setState({
             dados: {
                 id_funcao: '',

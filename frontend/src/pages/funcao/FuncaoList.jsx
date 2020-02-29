@@ -18,12 +18,12 @@ class FuncaoList extends Component {
             list: [],
             current: 3,
             currentPage: 1,
-            postsPerPage: 5,
+            postsPerPage: 10,
         }
     }
 
     async componentWillMount() {
-        const funcoes = await Api.buscar();
+        const funcoes = await Api.buscarFuncao();
         this.setState({
             list: funcoes.data.dados,
             acao: 'listar'
@@ -31,13 +31,13 @@ class FuncaoList extends Component {
     }
 
     async componentDidUpdate() {
-        const funcoes = await Api.buscar();
+        const funcoes = await Api.buscarFuncao();
         this.setState({
             list: funcoes.data.dados,
         });
     }
     async botaoExcluir(obj) {
-        await Api.excluir(obj);
+        await Api.excluirFuncao(obj);
     }
 
     renderRows() {
