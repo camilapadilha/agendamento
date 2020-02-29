@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { clickButtonEdit } from './funcaoActions';
@@ -9,12 +9,16 @@ import Button from '../../componentes/common/button';
 
 import Api from '../../Api';
 
+import Pagination from '../../componentes/list/pagination';
+
 class FuncaoList extends Component {
     constructor() {
         super();
         this.state = {
             list: [],
-            obj: {},
+            current: 3,
+            currentPage: 1,
+            postsPerPage: 5,
         }
     }
 
@@ -40,7 +44,12 @@ class FuncaoList extends Component {
         const list = this.state.list || []
         const { clickButtonEdit, funcao } = this.props;
 
-        return list.map(f => (
+        // Get current posts
+        const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
+        const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
+        const currentPosts = this.state.list.slice(indexOfFirstPost, indexOfLastPost);
+
+        return currentPosts.map(f => (
             <tr key={f.id_funcao}>
                 <td style={{ width: '80%' }}>{f.nome}</td>
                 <td style={{ width: '20%' }}>
@@ -59,17 +68,27 @@ class FuncaoList extends Component {
     }
 
     render() {
+        // Change page
+        const paginate = pageNumber => this.setState({ currentPage: pageNumber });
+
         return (
-            <Table titulo="Listagem de Função"
-                header={(
-                    <tr>
-                        <th>Nome</th>
-                        <th>Ações</th>
-                    </tr>
-                )}
-                modal={(<Funcao />)}>
-                {this.renderRows()}
-            </Table>
+            <>
+                <Table id="tableList" titulo="Listagem de Função"
+                    header={(
+                        <tr>
+                            <th>Nome</th>
+                            <th>Ações</th>
+                        </tr>
+                    )}
+                    modal={(<Funcao />)}>
+                    {this.renderRows()}
+                    <Pagination
+                        postsPerPage={this.state.postsPerPage}
+                        totalPosts={this.state.list.length}
+                        paginate={paginate}
+                    />
+                </Table>
+            </>
         )
     }
 }
