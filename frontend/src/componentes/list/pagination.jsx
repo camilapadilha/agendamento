@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './list.css';
 
 const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
@@ -12,7 +12,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
 
     return (
         <ul className='pagination'>
-            <li class="disabled"><a onClick={() => console.log("me", pageNumbers)} href="#!"><i class="material-icons">chevron_left</i></a></li>
+            {/* <li class="disabled"><a onClick={() => console.log("me", pageNumbers)} href="#!"><i class="material-icons">chevron_left</i></a></li> */}
             {pageNumbers.map(number => (
                 <li key={number} className=''>
                     <a onClick={() => paginate(number)} href='#!'>
@@ -20,8 +20,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
                     </a>
                 </li>
             ))}
-            <li classs="waves-effect"><a onClick={() => console.log("ma", pageNumbers)
-            } href="#!"><i class="material-icons">chevron_right</i></a></li>
+            {/* <li classs="waves-effect"><a onClick={() => console.log("ma", pageNumbers)} href="#!"><i class="material-icons">chevron_right</i></a></li> */}
         </ul>
     );
 };

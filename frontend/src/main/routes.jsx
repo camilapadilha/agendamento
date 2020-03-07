@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Login from '../pages/login/Login';
-import Usuario from '../pages/usuario/Usuario';
+import Usuario from '../pages/usuario/UsuarioList';
 import Dashboard from '../pages/dashboard/Dashboard';
 import AmbienteList from '../pages/ambiente/AmbienteList';
 import EquipamentoList from '../pages/equipamento/EquipamentoList';
@@ -18,7 +18,7 @@ export default function Routes() {
             <Route path='/app' component={Nav} />
             <Route path='/' exact component={Login} />
             <Switch>
-                <Route path='/app/usuario' component={Usuario} />
+                <Route path='/app/usuarioList' component={Usuario} />
                 <Route path='/app/dashboard' component={Dashboard} />
                 <Route path='/app/ambienteList' component={AmbienteList} />
                 <Route path='/app/equipamentoList' component={EquipamentoList} />

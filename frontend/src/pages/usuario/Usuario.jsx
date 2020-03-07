@@ -1,34 +1,57 @@
 import React, { Component } from 'react';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
+import { clickButtonEdit } from './usuarioActions';
+
 import { reduxForm, Field } from 'redux-form';
 import InputAndLabel from '../../componentes/common/InputAndLabel';
 import Select from '../../componentes/common/Select';
 import Option from '../../componentes/common/Option';
-import Checkbox from '../../componentes/common/checkbox';
 import Button from '../../componentes/common/button';
 import './Usuario.css';
+import Api from '../../Api';
 
-import "firebase/database";
-
-export default class Usuario extends Component {
-    constructor(){
+class Usuario extends Component {
+    constructor() {
         super();
         this.state = {
             nome: '',
             senha: '',
+            listFuncao: [],
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
         M.AutoInit();
+        const list = await Api.buscarFuncao();
+        this.setState({
+            listFuncao: list.data.dados,
+        })
     }
+
+    renderOptionsFuncao() {
+        const list = this.state.listFuncao || [];
+        return list.map((item, index) => 
+            <option key={index} value={item}>{item.nome}</option>
+        );
+    }
+
     render() {
+        console.log("aaaaa", this.renderOptionsFuncao());
+        
         return (
             <div className="row">
-                <div className="right-align" id="botaoAdd">
-                    <a className="modal-trigger" href="#modal">Cadastre-se</a>
-                </div>
-
+                {this.props.list ?
+                    <div className="right-align" id="botaoAdd">
+                        <a className="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal"><i className="material-icons">add</i></a>
+                    </div>
+                    :
+                    <div className="right-align" id="botaoAdd">
+                        <a className="modal-trigger" href="#modal">Cadastre-se</a>
+                    </div>
+                }
                 <div id="modal" className="modal modal-fixed-footer">
                     <div className="modal-content">
 
@@ -50,31 +73,22 @@ export default class Usuario extends Component {
                                 type='text' label='Celular'
                                 typeInput='input-field col m4' />
 
-                            <div id='centralizar'>
+                            <div>
                                 <Field name="emailPessoal" component={InputAndLabel}
                                     icone='contact_mail' idAndFor='emailPessoal'
                                     type='text' label='Email Pessoal'
                                     typeInput='input-field col m4' />
-                                <Field name='Função' component={Select}
-                                    label='Selecione sua Função'>
-                                    <Option value='professor' name='Professor' />
-                                    <Option value='agenteEdu' name='Agente Educacional' />
-                                </Field>
 
+                                <Select label='Selecione sua Função'>
+                                    {this.renderOptionsFuncao()}
+                                </Select>
                             </div>
 
-                            <div id='disciplinas'>
-                                <h1>Disciplinas</h1>
-                                <Field name='Disciplinas' component={Checkbox}
-                                    span='Matemática' />
-                                <Field name='Disciplinas' component={Checkbox}
-                                    span='Português' />
-                                <Field name='Disciplinas' component={Checkbox}
-                                    span='História' />
-                                <Field name='Disciplinas' component={Checkbox}
-                                    span='Filosofia' />
-                                <Field name='Disciplinas' component={Checkbox}
-                                    span='Química' />
+                            <div>
+                                <Select label='Selecione suas disciplinas'>
+                                    <Option value='Matemática' name='Matemática' />
+                                    <Option value='Português' name='Português' />
+                                </Select>
                             </div>
 
                         </div>
@@ -100,7 +114,7 @@ export default class Usuario extends Component {
                         <div className='right-align' id='botoes'>
                             <Button class='waves-effect waves-light btn modal-close'
                                 icone='clear' name='Cancelar' />
-                            <Button class='waves-effect waves-light btn'
+                            <Button class='waves-effect waves-light btn modal-close'
                                 icone='send' name='Cadastrar' />
                         </div>
                     </div>
@@ -111,3 +125,9 @@ export default class Usuario extends Component {
 }
 
 Usuario = reduxForm({ form: 'Usuario' })(Usuario)
+const mapStateToProps = store => ({
+    usuario: store.usuarioReducer.usuario,
+    funcao: store.funcaoReducer.funcao
+})
+const mapDispatchToProps = dispatch => bindActionCreators({ clickButtonEdit }, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(Usuario)

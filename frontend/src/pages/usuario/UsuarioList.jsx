@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { clickButtonEdit } from './funcaoActions';
+import { connect } from 'react-redux';
 
-import Funcao from './Funcao';
+import Usuario from './Usuario';
 import Table from '../../componentes/list/table';
 import Button from '../../componentes/common/button';
+
+import { clickButtonEdit } from './usuarioActions';
 
 import Api from '../../Api';
 
 import Pagination from '../../componentes/list/pagination';
 
-class FuncaoList extends Component {
+class UsuarioList extends Component {
     constructor() {
         super();
         this.state = {
@@ -23,74 +24,74 @@ class FuncaoList extends Component {
     }
 
     async componentWillMount() {
-        const funcoes = await Api.buscarFuncao();
+        const usuario = await Api.buscarUsuario();
         this.setState({
-            list: funcoes.data.dados,
+            list: usuario.data.dados,
+            acao: 'listar'
         });
     }
 
     async componentDidUpdate() {
-        const funcoes = await Api.buscarFuncao();
+        const usuario = await Api.buscarUsuario();
         this.setState({
-            list: funcoes.data.dados,
+            list: usuario.data.dados,
         });
     }
     async botaoExcluir(obj) {
-        await Api.excluirFuncao(obj);
+        await Api.excluirUsuario(obj);
     }
-
     renderRows() {
-        const list = this.state.list || []
-        const { clickButtonEdit, funcao } = this.props;
-
+        const { clickButtonEdit } = this.props;
         // Get current posts
         const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
         const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
         const currentPosts = this.state.list.slice(indexOfFirstPost, indexOfLastPost);
 
-        return currentPosts.map(f => (
-            <tr key={f.id_funcao}>
-                <td style={{ width: '80%' }}>{f.nome}</td>
+        return currentPosts.map(u => (
+            <tr key={u.id_usuario}>
+                <td style={{ width: '80%' }}>{u.nome}</td>
                 <td style={{ width: '20%' }}>
                     <Button class="btn modal-trigger" href="#modal"
                         onClick={() =>
-                            clickButtonEdit(f, 'edit')
+                            clickButtonEdit(u, 'edit')
                         }
                         icone="edit" />
                     <Button class="btn" onClick={() =>
-                        this.botaoExcluir(f)
+                        this.botaoExcluir(u)
                     }
                         icone="delete" />
                 </td>
             </tr>
         ));
-    }
 
+    }
+   
     render() {
-        // Change page
         const paginate = pageNumber => this.setState({ currentPage: pageNumber });
 
         return (
-            <>
-                <Table id="tableList" titulo="Listagem de Função"
-                    header={(
-                        <tr>
-                            <th>Nome</th>
-                            <th>Ações</th>
-                        </tr>
-                    )}
-                    modal={(<Funcao />)}>
-                    {this.renderRows()}
-                    <Pagination
-                        postsPerPage={this.state.postsPerPage}
-                        totalPosts={this.state.list.length}
-                        paginate={paginate}
-                    />
-                </Table>
-            </>
+            <Table id="tableList" titulo="Listagem de Usuario"
+                headers={(
+                    <tr>
+                        <th>Nome</th>
+                        <th>Login</th>
+                        <th>CPF</th>
+                        <th>E-mail Institucional</th>
+                        <th>Ações</th>
+                    </tr>
+                )}
+                modal={(<Usuario list="true" />)}>
+                {this.renderRows()}
+                <Pagination
+                    postsPerPage={this.state.postsPerPage}
+                    totalPosts={this.state.list.length}
+                    paginate={paginate}
+                />
+            </Table>
         )
     }
 }
-const mapStateToProps = store => ({ funcao: store.funcaoReducer.funcao })
+
+const mapStateToProps = store => ({ usuario: store.usuarioReducer.usuario });
 const mapDispatchToProps = dispatch => bindActionCreators({ clickButtonEdit }, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(FuncaoList)
+export default connect(mapStateToProps, mapDispatchToProps)(UsuarioList);

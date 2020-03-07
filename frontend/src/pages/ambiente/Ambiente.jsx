@@ -1,16 +1,65 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
+import { clickButtonEdit } from './ambienteActions';
 
 import './Ambiente.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import InputAndLabel from '../../componentes/common/InputAndLabel';
 import Button from '../../componentes/common/button';
+import Api from '../../Api';
 
-export default class Ambiente extends Component {
+class Ambiente extends Component {
+    constructor() {
+        super();
+        this.state = {
+            dados: {
+                id_ambiente: '',
+                nome: '',
+                num_sala: '',
+                capacidade_publico: '',
+                quantidade_computadores: '',
+                possui_internet: '',
+            },
+        }
+        this.handleClick = this.handleClick.bind(this);
+    }
+
     componentDidMount() {
         M.AutoInit();
     }
+
+    async handleClick() {
+        await Api.salvarAmbiente(this.state.dados);
+        this.setState({
+            dados: {
+                id_ambiente: '',
+                nome: '',
+                num_sala: '',
+                capacidade_publico: '',
+                quantidade_computadores: '',
+                possui_internet: '',
+            },
+        });
+    }
     render() {
+        const { clickButtonEdit, ambiente } = this.props;
+
+        if (this.props.ambiente.acao == 'edit') {
+            this.setState({
+                dados: {
+                    id_ambiente: this.props.ambiente.value.id_ambiente,
+                    nome: this.props.ambiente.value.nome,
+                    num_sala: this.props.ambiente.value.num_sala,
+                    capacidade_publico: this.props.ambiente.value.capacidade_publico,
+                    quantidade_computadores: this.props.ambiente.value.quantidade_computadores,
+                    possui_internet: this.props.ambiente.value.possui_internet,
+                },
+            });
+            clickButtonEdit('', '');
+        }
         return (
             <div className="row">
                 <div className="right-align" id="botaoAdd">
@@ -21,35 +70,79 @@ export default class Ambiente extends Component {
                     <div className="modal-content">
                         <form>
                             <h1>Cadastro de Ambiente</h1>
-                            <Field name="nome" component={InputAndLabel}
+                            <InputAndLabel
                                 icone='home' idAndFor='nome'
                                 type='text' label='Nome do Ambiente'
-                                typeInput='input-field col m4' />
+                                typeInput='input-field col m4'
+                                onChange={event => this.setState({
+                                    dados: {
+                                        ...this.state.dados,
+                                        nome: event.target.value
+                                    }
+                                })}
+                                value={this.state.dados.nome} />
 
-                            <Field name="numSala" component={InputAndLabel}
+                            <InputAndLabel
                                 icone='home' idAndFor='numSala'
-                                type='text' label='Número do Ambiente'
-                                typeInput='input-field col m4' />
+                                type='text' label='Número'
+                                typeInput='input-field col m4'
+                                onChange={event => this.setState({
+                                    dados: {
+                                        ...this.state.dados,
+                                        num_sala: event.target.value
+                                    }
+                                })}
+                                value={this.state.dados.num_sala} />
 
-                            <Field name="capacidadePub" component={InputAndLabel}
+                            <InputAndLabel
                                 icone='group' idAndFor='capacidadePub'
                                 type='text' label='Capacidade de Público'
-                                typeInput='input-field col m4' />
+                                typeInput='input-field col m4'
+                                onChange={event => this.setState({
+                                    dados: {
+                                        ...this.state.dados,
+                                        capacidade_publico: event.target.value
+                                    }
+                                })}
+                                value={this.state.dados.capacidade_publico} />
 
-                            <Field name="quantComp" component={InputAndLabel}
+                            <InputAndLabel
                                 icone='desktop_windows' idAndFor='quantComp'
                                 type='text' label='Quantidade de Computadores'
-                                typeInput='input-field col m4' />
+                                typeInput='input-field col m4'
+                                onChange={event => this.setState({
+                                    dados: {
+                                        ...this.state.dados,
+                                        quantidade_computadores: event.target.value
+                                    }
+                                })}
+                                value={this.state.dados.quantidade_computadores} />
 
                             <div className="radioPI">
                                 <h1>Possui Internet</h1>
                                 <p>
                                     <label>
-                                        <input name="possuiInternet" type="radio" />
+                                        <input name="possuiInternet" type="radio"
+                                            checked={this.state.dados.possui_internet == 1}
+                                            onChange={() => this.setState({
+                                                dados: {
+                                                    ...this.state.dados,
+                                                    possui_internet: 1
+                                                }
+                                            })}
+                                            value={this.state.dados.possui_internet} />
                                         <span>Sim</span>
                                     </label>
                                     <label>
-                                        <input name="possuiInternet" type="radio" />
+                                        <input name="possuiInternet" type="radio"
+                                            checked={this.state.dados.possui_internet == 2}
+                                            onChange={() => this.setState({
+                                                dados: {
+                                                    ...this.state.dados,
+                                                    possui_internet: 2
+                                                }
+                                            })}
+                                            value={this.state.dados.possui_internet} />
                                         <span>Não</span>
                                     </label>
                                 </p>
@@ -57,17 +150,20 @@ export default class Ambiente extends Component {
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <div className='right-align' id='botoes'>
+                        <div className='row right-align' id='botoes'>
                             <Button class='waves-effect waves-light btn modal-close'
                                 icone='clear' name='Cancelar' />
                             <Button class='waves-effect waves-light btn modal-close'
-                                icone='send' name='Cadastrar' />
+                                icone='send' name='Cadastrar'
+                                onClick={() => this.handleClick()} />
                         </div>
                     </div>
-
                 </div>
             </div>
         )
     }
 }
 Ambiente = reduxForm({ form: 'Ambiente' })(Ambiente)
+const mapStateToProps = store => ({ ambiente: store.ambienteReducer.ambiente })
+const mapDispatchToProps = dispatch => bindActionCreators({ clickButtonEdit }, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(Ambiente)
