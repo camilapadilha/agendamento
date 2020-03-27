@@ -6,6 +6,21 @@ const ambienteController = require('./controllers/ambienteController');
 const express = require('express');
 const routes = express();
 
+routes.get('/validarLogin', async (req, res) => {
+    try {
+        const ret = await usuarioController.validarLogin();
+        res.send({
+            status: true,
+            dados: ret,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+
 routes.get('/buscarFuncao', async (req, res) => {
     try {
         const ret = await funcaoController.buscar();

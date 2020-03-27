@@ -9,6 +9,7 @@ import Button from '../../componentes/common/button';
 import { clickButtonEdit } from './disciplinaActions';
 
 import Api from '../../Api';
+import ModalConfirmacao from '../../componentes/common/modalConfirmacao';
 
 import Pagination from '../../componentes/list/pagination';
 
@@ -20,6 +21,7 @@ class DisciplinaList extends Component {
             current: 3,
             currentPage: 1,
             postsPerPage: 10,
+            item: null
         }
     }
 
@@ -49,16 +51,22 @@ class DisciplinaList extends Component {
 
         return currentPosts.map(d => (
             <tr key={d.id_disciplina}>
-                <td style={{ width: '80%' }}>{d.nome}</td>
-                <td style={{ width: '20%' }}>
-                    <Button class="btn modal-trigger" href="#modal"
+                <td style={{ width: '87%' }}>{d.nome}</td>
+                <td style={{ width: '13%' }}>
+                    <Button class="btn modal-trigger btn-icon " href="#modal"
                         onClick={() =>
                             clickButtonEdit(d, 'edit')
                         }
                         icone="edit" />
-                    <Button class="btn" onClick={() =>
-                        this.botaoExcluir(d)
-                    }
+                    <Button class="btn modal-trigger btn-icon "
+                        href="#modal1"
+                        onClick={() => {
+                            this.setState({
+                                ...this.state,
+                                item: d
+                            })
+                        }
+                        }
                         icone="delete" />
                 </td>
             </tr>
@@ -70,11 +78,11 @@ class DisciplinaList extends Component {
         const paginate = pageNumber => this.setState({ currentPage: pageNumber });
 
         return (
-            <Table id="tableList" titulo="Listagem de Disciplina"
-                headers={(
+            <Table id="tableList" id_h1="titleTable" titulo="Listagem de Disciplina"
+                header={(
                     <tr>
                         <th>Nome</th>
-                        <th>Ações</th>
+                        <th id="th_acoes">Ações</th>
                     </tr>
                 )}
                 modal={(<Disciplina />)}>
@@ -84,6 +92,12 @@ class DisciplinaList extends Component {
                     totalPosts={this.state.list.length}
                     paginate={paginate}
                 />
+                <ModalConfirmacao
+                    item={this.state.item ? this.state.item.nome : null}
+                    onClick={() => {
+                        this.botaoExcluir(this.state.item)
+                    }
+                    } />
             </Table>
         )
     }

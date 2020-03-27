@@ -7,7 +7,9 @@ import Ambiente from './Ambiente';
 import Table from '../../componentes/list/table';
 import Api from '../../Api';
 import Button from '../../componentes/common/button';
+import ModalConfirmacao from '../../componentes/common/modalConfirmacao';
 import Pagination from '../../componentes/list/pagination';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 class AmbienteList extends Component {
     constructor() {
@@ -17,6 +19,7 @@ class AmbienteList extends Component {
             current: 3,
             currentPage: 1,
             postsPerPage: 10,
+            item: null
         }
     }
 
@@ -26,6 +29,10 @@ class AmbienteList extends Component {
             list: ambientes.data.dados,
         });
 
+    }
+
+    componentDidMount() {
+        M.AutoInit();
     }
 
     async componentDidUpdate() {
@@ -49,20 +56,26 @@ class AmbienteList extends Component {
 
         return currentPosts.map(a => (
             <tr key={a.id_ambiente}>
-                <td style={{ width: '16%' }}>{a.nome}</td>
-                <td style={{ width: '16%' }}>{a.num_sala}</td>
-                <td style={{ width: '16%' }}>{a.capacidade_publico}</td>
-                <td style={{ width: '16%' }}>{a.quantidade_computadores}</td>
-                <td style={{ width: '16%' }}>{a.possui_internet == 1 ? 'Sim' : 'Não'}</td>
-                <td style={{ width: '20%' }}>
-                    <Button class="btn modal-trigger" href="#modal"
+                <td style={{ width: '31%' }}>{a.nome}</td>
+                <td style={{ width: '14%' }}>{a.num_sala}</td>
+                <td style={{ width: '14%' }}>{a.capacidade_publico}</td>
+                <td style={{ width: '14%' }}>{a.quantidade_computadores}</td>
+                <td style={{ width: '14%' }}>{a.possui_internet == 1 ? 'Sim' : 'Não'}</td>
+                <td style={{ width: '13%' }}>
+                    <Button class="btn modal-trigger btn-icon " href="#modal"
                         onClick={() =>
                             clickButtonEdit(a, 'edit')
                         }
                         icone="edit" />
-                    <Button class="btn" onClick={() =>
-                        this.botaoExcluir(a)
-                    }
+                    <Button class="btn modal-trigger btn-icon "
+                        href="#modal1"
+                        onClick={() => {
+                            this.setState({
+                                ...this.state,
+                                item: a
+                            })
+                        }
+                        }
                         icone="delete" />
                 </td>
             </tr>
@@ -75,7 +88,7 @@ class AmbienteList extends Component {
 
         return (
             <>
-                <Table id="tableList" titulo="Listagem de Ambientes"
+                <Table id="tableList" id_h1="titleTable" titulo="Listagem de Ambientes"
                     header={(
                         <tr>
                             <th>Nome</th>
@@ -83,7 +96,7 @@ class AmbienteList extends Component {
                             <th>Capacidade de Público</th>
                             <th>Quantidade Computadores</th>
                             <th>Possui Internet</th>
-                            <th>Ações</th>
+                            <th id="th_acoes">Ações</th>
                         </tr>
                     )}
                     modal={(<Ambiente />)}>
@@ -94,6 +107,12 @@ class AmbienteList extends Component {
                         paginate={paginate}
                     />
                 </Table>
+                <ModalConfirmacao
+                    item={this.state.item ? this.state.item.nome : null}
+                    onClick={() => {
+                        this.botaoExcluir(this.state.item)
+                    }
+                    } />
             </>
         )
     }

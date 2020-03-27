@@ -1,6 +1,7 @@
 html {
     height: 100%;
 }
+
 body {
     height: 100%;
 }
@@ -11,4 +12,35 @@ body {
 
 .container {
     margin-top: 10px;
+}
+
+#tableList td {
+    padding: 1px;
+}
+
+#titleTable {
+    margin-bottom: 0px;
+    margin-top: 2%;    
+}
+
+#botaoAdd {
+    position: fixed;
+    right: 8%;
+    bottom: 4%;
+}
+
+.pagination {
+    position: fixed;
+    right: 50%;
+    bottom: 4%;  
+}
+
+.btn-icon {
+    padding-left: 10px;
+    padding-right: 10px;
+    float: right;
+}
+
+#th_acoes {
+    text-align: center;
 }

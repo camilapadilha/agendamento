@@ -24,18 +24,22 @@ class Funcao extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
-        M.AutoInit();
-    }
-
-    async handleClick() {
-        await Api.salvarFuncao(this.state.dados);
+    limparCampos() {
         this.setState({
             dados: {
                 id_funcao: '',
                 nome: '',
             },
         });
+    }
+
+    componentDidMount() {
+        M.AutoInit();
+    }
+
+    async handleClick() {
+        await Api.salvarFuncao(this.state.dados);
+        this.limparCampos();
     }
 
     render() {
@@ -77,8 +81,11 @@ class Funcao extends Component {
                                 </div>
                                 <div className='row right-align' id='botoes'>
                                     <Button class='waves-effect waves-light btn modal-close'
-                                        icone='clear' name='Cancelar' />
+                                        classIcon='right'
+                                        icone='clear' name='Cancelar'
+                                        onClick={() => this.limparCampos()} />
                                     <Button class='waves-effect waves-light btn modal-close'
+                                        classIcon='right'
                                         icone='send' name='Cadastrar'
                                         onClick={() => this.handleClick()} />
                                 </div>

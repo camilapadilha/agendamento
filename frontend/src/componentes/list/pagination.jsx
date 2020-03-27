@@ -4,24 +4,48 @@ import './list.css';
 const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
 
     const pageNumbers = [];
-    const [page, setPage] = useState();
+    const [page, setPage] = useState(1);
 
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
         pageNumbers.push(i);
     }
 
+    function btnPaginate(number) {
+        paginate(number);
+        setPage(number);
+    }
+
+    function pageAnterior() {
+        if (page > 1) {
+            paginate(page - 1)
+            setPage(page - 1)
+        }
+    }
+    
+    function pageProximo() {
+        if (page < pageNumbers.length) {
+            paginate(page + 1)
+            setPage(page + 1)
+        }
+    }
+
     return (
         <ul className='pagination'>
-            {/* <li class="disabled"><a onClick={() => console.log("me", pageNumbers)} href="#!"><i class="material-icons">chevron_left</i></a></li> */}
+            <li className="waves-effect"><a onClick={() => pageAnterior()
+            } href="#!"><i className="material-icons">chevron_left</i></a></li>
             {pageNumbers.map(number => (
                 <li key={number} className=''>
-                    <a onClick={() => paginate(number)} href='#!'>
+                    <a onClick={() =>
+                        btnPaginate(number)
+                    }
+                        href='#!'>
                         {number}
                     </a>
                 </li>
-            ))}
-            {/* <li classs="waves-effect"><a onClick={() => console.log("ma", pageNumbers)} href="#!"><i class="material-icons">chevron_right</i></a></li> */}
-        </ul>
+            ))
+            }
+            <li className="waves-effect"><a onClick={() => pageProximo()} href="#!"><i className="material-icons">chevron_right</i></a></li>
+        </ul >
     );
 };
 

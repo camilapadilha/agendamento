@@ -8,6 +8,7 @@ import Table from '../../componentes/list/table';
 import Button from '../../componentes/common/button';
 
 import Api from '../../Api';
+import ModalConfirmacao from '../../componentes/common/modalConfirmacao';
 
 import Pagination from '../../componentes/list/pagination';
 
@@ -19,6 +20,7 @@ class FuncaoList extends Component {
             current: 3,
             currentPage: 1,
             postsPerPage: 10,
+            item: null
         }
     }
 
@@ -50,16 +52,22 @@ class FuncaoList extends Component {
 
         return currentPosts.map(f => (
             <tr key={f.id_funcao}>
-                <td style={{ width: '80%' }}>{f.nome}</td>
-                <td style={{ width: '20%' }}>
-                    <Button class="btn modal-trigger" href="#modal"
+                <td style={{ width: '87%' }}>{f.nome}</td>
+                <td style={{ width: '13%' }}>
+                    <Button class="btn modal-trigger btn-icon " href="#modal"
                         onClick={() =>
                             clickButtonEdit(f, 'edit')
                         }
                         icone="edit" />
-                    <Button class="btn" onClick={() =>
-                        this.botaoExcluir(f)
-                    }
+                    <Button class="btn modal-trigger btn-icon "
+                        href="#modal1"
+                        onClick={() => {
+                            this.setState({
+                                ...this.state,
+                                item: f
+                            })
+                        }
+                        }
                         icone="delete" />
                 </td>
             </tr>
@@ -72,11 +80,11 @@ class FuncaoList extends Component {
 
         return (
             <>
-                <Table id="tableList" titulo="Listagem de Função"
+                <Table id="tableList" id_h1="titleTable" titulo="Listagem de Função"
                     header={(
                         <tr>
                             <th>Nome</th>
-                            <th>Ações</th>
+                            <th id="th_acoes">Ações</th>
                         </tr>
                     )}
                     modal={(<Funcao />)}>
@@ -87,6 +95,12 @@ class FuncaoList extends Component {
                         paginate={paginate}
                     />
                 </Table>
+                <ModalConfirmacao
+                    item={this.state.item ? this.state.item.nome : null}
+                    onClick={() => {
+                        this.botaoExcluir(this.state.item)
+                    }
+                    } />
             </>
         )
     }

@@ -7,6 +7,7 @@ import Button from '../../componentes/common/button';
 import Equipamento from './Equipamento';
 import Table from '../../componentes/list/table';
 import Api from '../../Api';
+import ModalConfirmacao from '../../componentes/common/modalConfirmacao';
 import Pagination from '../../componentes/list/pagination';
 
 class EquipamentoList extends Component {
@@ -17,6 +18,7 @@ class EquipamentoList extends Component {
             current: 3,
             currentPage: 1,
             postsPerPage: 10,
+            item: null
         }
     }
 
@@ -48,18 +50,24 @@ class EquipamentoList extends Component {
 
         return currentPosts.map(e => (
             <tr key={e.id_equipamento}>
-                <td style={{ width: '26%' }}>{e.nome}</td>
-                <td style={{ width: '26%' }}>{e.marca}</td>
-                <td style={{ width: '26%' }}>{e.modelo}</td>
-                <td style={{ width: '20%' }}>
-                    <Button class="btn modal-trigger" href="#modal1"
+                <td style={{ width: '30%' }}>{e.nome}</td>
+                <td style={{ width: '29%' }}>{e.marca}</td>
+                <td style={{ width: '28%' }}>{e.modelo}</td>
+                <td style={{ width: '13%' }}>
+                    <Button class="btn modal-trigger btn-icon " href="#modal"
                         onClick={() =>
                             clickButtonEdit(e, 'edit')
                         }
                         icone="edit" />
-                    <Button class="btn" onClick={() =>
-                        this.botaoExcluir(e)
-                    }
+                    <Button class="btn modal-trigger btn-icon "
+                        href="#modal1"
+                        onClick={() => {
+                            this.setState({
+                                ...this.state,
+                                item: e
+                            })
+                        }
+                        }
                         icone="delete" />
                 </td>
             </tr>
@@ -72,13 +80,13 @@ class EquipamentoList extends Component {
         return (
 
             <>
-                <Table id="tableList" titulo="Listagem de Equipamentos"
+                <Table id="tableList" id_h1="titleTable" titulo="Listagem de Equipamentos"
                     header={(
                         <tr>
                             <th>Nome</th>
                             <th>Marca</th>
                             <th>Modelo</th>
-                            <th>Ações</th>
+                            <th id="th_acoes">Ações</th>
                         </tr>
                     )}
                     modal={(<Equipamento />)}>
@@ -88,6 +96,12 @@ class EquipamentoList extends Component {
                         totalPosts={this.state.list.length}
                         paginate={paginate}
                     />
+                    <ModalConfirmacao
+                        item={this.state.item ? this.state.item.nome : null}
+                        onClick={() => {
+                            this.botaoExcluir(this.state.item)
+                        }
+                        } />
                 </Table>
             </>
 

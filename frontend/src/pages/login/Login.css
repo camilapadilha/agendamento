@@ -14,7 +14,7 @@
     display: grid;
     
 }
-.login-container form button{
+.btn-logar{
     margin-bottom: 10px;
     width: 100%;
 }

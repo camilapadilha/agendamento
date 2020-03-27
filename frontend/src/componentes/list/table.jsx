@@ -5,7 +5,7 @@ import './list.css';
 export default props => (
     <div className="row container z-depth-2" id="tabela">
         <div className="col m12">
-            <h1>{props.titulo}</h1>
+            <h1 id={props.id_h1}>{props.titulo}</h1>
             <table className="responsive-table highlight" id={props.id}>
                 <thead>
                     {props.header}
@@ -14,6 +14,7 @@ export default props => (
                     {props.children}
                 </tbody>
             </table>
+            {props.pagination}
         </div>
         {props.modal}
     </div>

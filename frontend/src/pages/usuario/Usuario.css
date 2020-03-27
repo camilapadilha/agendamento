@@ -1,24 +1,35 @@
 
-#centralizar .input-field{
+#centralizar .input-field {
     margin-left: 130px;
 }
-h1{
+
+h1 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }
 
-#painel{
+#painel {
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 5px;
 }
-#disciplinas span{
+
+#disciplinas span {
    padding-right: 30px;
 }
-#disciplinas{
+
+#disciplinas {
     padding-bottom: 20px;
 }
 
-#botoes a{
+#botoes a {
     margin-left: 10px;
+}
+
+#tableDisciplinas {
+    margin-bottom: 20px;
+}
+
+.botaoAdd {
+    margin-top: 25px;
 }

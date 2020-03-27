@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
 
-import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
+import { usuarioLogado } from './loginActions';
 import InputAndLabel from '../../componentes/common/InputAndLabel';
 import './Login.css';
+import Button from '../../componentes/common/button';
 
 import Usuario from '../usuario/Usuario';
+import Api from '../../Api';
 
-export default class Login extends Component {
-    // redirecionar = () => {
-    //     const {history} = this.props;
-    //     history.push('/usuario');
-    // }
+class Login extends Component {
 
-    
+    constructor() {
+        super();
+        this.state = {
+            login: 'asd',
+            senha: '',
+            href: ''
+        }
+    }
+
+    async validarLogin() {
+        const usuario = await Api.validarLogin("this.state.login");
+        if (usuario) {
+            this.setState({
+                href: 'app/dashboard'
+            })
+        }
+        console.log("a", usuario);
+
+    }
 
     render() {
         return (
@@ -25,24 +44,33 @@ export default class Login extends Component {
                                     <h1 className="center-align">Login</h1>
                                 </div>
                                 <div className='row' id='campos'>
-                                    <Field
+                                    <InputAndLabel
                                         typeInput='input-field col s12 m12 l12'
-                                        name='email' component={InputAndLabel}
                                         icone='mail_outline'
                                         idAndFor='email' type='text'
-                                        label='Email' />
-                                    <Field
+                                        label='Email'
+                                        onChange={event => this.setState({
+                                            login: event.target.value
+                                        })}
+                                        value={this.state.login} />
+                                    <InputAndLabel
                                         typeInput='input-field col s12 m12 l12'
-                                        name='senha' component={InputAndLabel}
                                         icone='lock_outline'
                                         idAndFor='senha' type='password'
-                                        label='Senha' />
+                                        label='Senha'
+                                        onChange={event => this.setState({
+                                            senha: event.target.value
+                                        })}
+                                        value={this.state.senha} />
                                 </div>
 
-                                <a className="waves-effect waves-light btn" href="app/dashboard">Logar</a>
+                                <Button class='waves-effect waves-light btn btn-logar'
+                                    name='Logar'
+                                    href={this.state.href}
+                                    onClick={() => this.validarLogin()} />
 
                                 <div id="cadastrar" className="row">
-                                    <Usuario/>
+                                    <Usuario />
                                 </div>
                             </form>
                         </div>
@@ -54,5 +82,8 @@ export default class Login extends Component {
     }
 }
 
-Login = reduxForm({ form: 'Login' })(Login)
-
+const mapStateToProps = store => ({
+    login: store.loginReducer.login
+})
+const mapDispatchToProps = dispatch => bindActionCreators({ usuarioLogado }, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

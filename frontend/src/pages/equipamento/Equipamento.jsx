@@ -25,12 +25,7 @@ class Equipamento extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
-        M.AutoInit();
-    }
-
-    async handleClick() {
-        await Api.salvarEquipamentos(this.state.dados);
+    limparCampos() {
         this.setState({
             dados: {
                 id_equipamento: '',
@@ -40,12 +35,21 @@ class Equipamento extends Component {
             },
         });
     }
+
+    componentDidMount() {
+        M.AutoInit();
+    }
+
+    async handleClick() {
+        await Api.salvarEquipamentos(this.state.dados);
+        this.limparCampos();
+    }
     render() {
         const { clickButtonEdit } = this.props;
 
         if (this.props.equipamento.acao == 'edit') {
             console.log("en", this.props.equipamento.value);
-            
+
             this.setState({
                 dados: {
                     id_equipamento: this.props.equipamento.value.id_equipamento,
@@ -59,10 +63,10 @@ class Equipamento extends Component {
         return (
             <div className="row">
                 <div className="right-align" id="botaoAdd">
-                    <a className="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1"><i className="material-icons">add</i></a>
+                    <a className="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal"><i className="material-icons">add</i></a>
                 </div>
 
-                <div id="modal1" className="modal modal-fixed-footer">
+                <div id="modal" className="modal modal-fixed-footer">
                     <div className="modal-content">
                         <form>
                             <h1>Cadastro de Equipamentos Multimídia</h1>
@@ -110,8 +114,11 @@ class Equipamento extends Component {
                     <div className="modal-footer">
                         <div className='row right-align' id='botoes'>
                             <Button class='waves-effect waves-light btn modal-close'
-                                icone='clear' name='Cancelar' />
-                            <Button class='waves-effect waves-light btn modal-close'
+                                classIcon='right'
+                                icone='clear' name='Cancelar'
+                                onClick={() => this.limparCampos()} />
+                            < Button class='waves-effect waves-light btn modal-close'
+                                classIcon='right'
                                 icone='send' name='Cadastrar'
                                 onClick={() => this.handleClick()} />
                         </div>

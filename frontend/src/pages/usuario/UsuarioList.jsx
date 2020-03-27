@@ -9,6 +9,7 @@ import Button from '../../componentes/common/button';
 import { clickButtonEdit } from './usuarioActions';
 
 import Api from '../../Api';
+import ModalConfirmacao from '../../componentes/common/modalConfirmacao';
 
 import Pagination from '../../componentes/list/pagination';
 
@@ -20,6 +21,7 @@ class UsuarioList extends Component {
             current: 3,
             currentPage: 1,
             postsPerPage: 10,
+            item: ''
         }
     }
 
@@ -49,45 +51,62 @@ class UsuarioList extends Component {
 
         return currentPosts.map(u => (
             <tr key={u.id_usuario}>
-                <td style={{ width: '80%' }}>{u.nome}</td>
-                <td style={{ width: '20%' }}>
-                    <Button class="btn modal-trigger" href="#modal"
+                <td style={{ width: '27%' }}>{u.nome}</td>
+                <td style={{ width: '20%' }}>{u.login}</td>
+                <td style={{ width: '15%' }}>{u.cpf}</td>
+                <td style={{ width: '25%' }}>{u.email_institucional}</td>
+                <td style={{ width: '13%' }}>
+                    <Button class="btn modal-trigger btn-icon " href="#modal"
                         onClick={() =>
                             clickButtonEdit(u, 'edit')
                         }
                         icone="edit" />
-                    <Button class="btn" onClick={() =>
-                        this.botaoExcluir(u)
-                    }
+                    <Button class="btn modal-trigger btn-icon "
+                        href="#modal1"
+                        onClick={() => {
+                            this.setState({
+                                ...this.state,
+                                item: u
+                            })
+                        }
+                        }
                         icone="delete" />
                 </td>
             </tr>
         ));
 
     }
-   
+
     render() {
         const paginate = pageNumber => this.setState({ currentPage: pageNumber });
 
         return (
-            <Table id="tableList" titulo="Listagem de Usuario"
-                headers={(
-                    <tr>
-                        <th>Nome</th>
-                        <th>Login</th>
-                        <th>CPF</th>
-                        <th>E-mail Institucional</th>
-                        <th>Ações</th>
-                    </tr>
-                )}
-                modal={(<Usuario list="true" />)}>
-                {this.renderRows()}
-                <Pagination
-                    postsPerPage={this.state.postsPerPage}
-                    totalPosts={this.state.list.length}
-                    paginate={paginate}
-                />
-            </Table>
+            <>
+                <Table id="tableList" id_h1="titleTable" titulo="Listagem de Usuario"
+                    header={(
+                        <tr>
+                            <th>Nome</th>
+                            <th>Login</th>
+                            <th>CPF</th>
+                            <th>E-mail Institucional</th>
+                            <th id="th_acoes">Ações</th>
+                        </tr>
+                    )}
+                    modal={(<Usuario list="true" />)} pagination={<Pagination
+                        postsPerPage={this.state.postsPerPage}
+                        totalPosts={this.state.list.length}
+                        paginate={paginate}
+                    />}>
+                    {this.renderRows()}
+
+                </Table>
+                <ModalConfirmacao
+                    item={this.state.item ? this.state.item.nome : null}
+                    onClick={() => {
+                        this.botaoExcluir(this.state.item)
+                    }
+                    } />
+            </>
         )
     }
 }

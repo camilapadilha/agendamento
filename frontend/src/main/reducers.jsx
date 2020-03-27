@@ -5,6 +5,7 @@ import disciplinaReducer from '../pages/disciplina/disciplinaReducer';
 import usuarioReducer from '../pages/usuario/usuarioReducer';
 import equipamentoReducer from '../pages/equipamento/equipamentoReducer';
 import ambienteReducer from '../pages/ambiente/ambienteReducer';
+import loginReducer from '../pages/login/loginReducer';
 
 const rootReducer = combineReducers({
     form: formReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     disciplinaReducer,
     usuarioReducer,
     equipamentoReducer,
-    ambienteReducer
+    ambienteReducer,
+    loginReducer
 });
 
 export default rootReducer;

@@ -1,9 +1,7 @@
 import React from 'react';
-import Funcao from '../../pages/funcao/Funcao';
 
 export default props => (
-    <a className={props.class} onClick={props.onClick} style={{marginLeft:"5px"}} href={props.href}>
+    <button className={'botao ' + props.class} onClick={props.onClick} style={{marginLeft:"5px"}} href={props.href}>{props.name}
         <i className={'material-icons ' + props.classIcon}>{props.icone}</i>
-        {props.name}
-    </a>
+    </button>
 )

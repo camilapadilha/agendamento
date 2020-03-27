@@ -23,17 +23,21 @@ class Disciplina extends Component {
         this.handleClick = this.handleClick.bind(this);
 
     }
-    componentDidMount() {
-        M.AutoInit();
-    }
-    async handleClick() {
-        await Api.salvarDisciplina(this.state.dados);
+
+    limparCampos() {
         this.setState({
             dados: {
                 id_disciplina: '',
                 nome: '',
             },
         });
+    }
+    componentDidMount() {
+        M.AutoInit();
+    }
+    async handleClick() {
+        await Api.salvarDisciplina(this.state.dados);
+        this.limparCampos();
     }
 
     render() {
@@ -80,9 +84,14 @@ class Disciplina extends Component {
                     <div className="modal-footer">
                         <div className='right-align' id='botoes'>
                             <Button class='waves-effect waves-light btn modal-close'
-                                icone='clear' name='Cancelar' />
+                                classIcon='right'
+                                icone='clear' name='Cancelar'
+                                onClick={() =>
+                                    this.limparCampos()
+                                } />
 
                             <Button class='waves-effect waves-light btn modal-close'
+                                classIcon='right'
                                 icone='send' name='Cadastrar'
                                 onClick={() => this.handleClick()
                                 } />

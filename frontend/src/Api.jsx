@@ -1,7 +1,11 @@
 import axios from 'axios'
 
 export default class Api {
-    
+
+    static async validarLogin(login, senha) {
+        return await axios.get('http://localhost:4000/validarLogin?login=', { login });
+    }
+
     static async buscarFuncao() {
         return await axios.get('http://localhost:4000/buscarFuncao');
     }
