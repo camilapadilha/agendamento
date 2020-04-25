@@ -5,9 +5,9 @@ const co = require ('co')
     return new Promise((resolve, reject) => {
         co(function* () {
             let conn = connection;
-            if (!conn) {
-                conn = yield sqlUtil.getConnection();
-            }
+            // if (!conn) {
+            //     conn = yield sqlUtil.getConnection();
+            // }
             conn.query(sql, params, (err2, res) => {
                 if (!connection) {
                     conn.release();

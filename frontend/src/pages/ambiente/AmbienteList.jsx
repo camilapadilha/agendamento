@@ -56,7 +56,7 @@ class AmbienteList extends Component {
 
         return currentPosts.map(a => (
             <tr key={a.id_ambiente}>
-                <td style={{ width: '31%' }}>{a.nome}</td>
+                <td style={{ width: '31%' }}>{a.nome_ambiente}</td>
                 <td style={{ width: '14%' }}>{a.num_sala}</td>
                 <td style={{ width: '14%' }}>{a.capacidade_publico}</td>
                 <td style={{ width: '14%' }}>{a.quantidade_computadores}</td>
@@ -108,7 +108,7 @@ class AmbienteList extends Component {
                     />
                 </Table>
                 <ModalConfirmacao
-                    item={this.state.item ? this.state.item.nome : null}
+                    item={this.state.item ? this.state.item.nome_ambiente : null}
                     onClick={() => {
                         this.botaoExcluir(this.state.item)
                     }

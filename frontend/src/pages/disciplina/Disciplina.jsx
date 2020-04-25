@@ -17,27 +17,59 @@ class Disciplina extends Component {
         this.state = {
             dados: {
                 id_disciplina: '',
-                nome: '',
+                nome_disciplina: '',
             }
         }
         this.handleClick = this.handleClick.bind(this);
 
     }
 
+    componentDidMount() {
+        M.AutoInit();
+    }
+
     limparCampos() {
         this.setState({
             dados: {
                 id_disciplina: '',
-                nome: '',
+                nome_disciplina: '',
             },
         });
     }
-    componentDidMount() {
-        M.AutoInit();
+
+    inicializarForms() {
+        document.getElementById('label_nome').setAttribute('class', 'active');
     }
-    async handleClick() {
-        await Api.salvarDisciplina(this.state.dados);
+
+    limparInicializacaoForms() {
+        document.getElementById('label_nome').setAttribute('class', '');
+    }
+
+    limparValidacoes() {
+        document.getElementById('validar_nome').innerText = '';
+    }
+
+    btnCancelar() {
         this.limparCampos();
+        this.limparValidacoes();
+        this.limparInicializacaoForms();
+    }
+
+    async handleClick() {
+        let pode_salvar = true;
+        this.limparValidacoes();
+        if (this.state.dados.nome_disciplina == '') {
+            pode_salvar = false;
+            document.getElementById('validar_nome').innerText = 'Campo Obrigattório.';
+        }
+        if (pode_salvar) {
+            var elem = document.getElementById('modal');
+            var instance = M.Modal.getInstance(elem);
+            await Api.salvarDisciplina(this.state.dados);
+            instance.close();
+            this.limparValidacoes();
+            this.limparCampos();
+        }
     }
 
     render() {
@@ -47,10 +79,11 @@ class Disciplina extends Component {
             this.setState({
                 dados: {
                     id_disciplina: this.props.disciplina.value.id_disciplina,
-                    nome: this.props.disciplina.value.nome,
+                    nome_disciplina: this.props.disciplina.value.nome_disciplina,
                 },
             });
             clickButtonEdit('', '');
+            this.inicializarForms();
         }
 
         return (
@@ -72,11 +105,12 @@ class Disciplina extends Component {
                                     onChange={event => this.setState({
                                         dados: {
                                             ...this.state.dados,
-                                            nome: event.target.value
+                                            nome_disciplina: event.target.value
                                         }
                                     })}
-                                    value={this.state.dados.nome}
-                                />
+                                    value={this.state.dados.nome_disciplina}
+                                    idSpam='validar_nome'
+                                    idLabel='label_nome' />
 
                             </div>
                         </form>
@@ -87,10 +121,10 @@ class Disciplina extends Component {
                                 classIcon='right'
                                 icone='clear' name='Cancelar'
                                 onClick={() =>
-                                    this.limparCampos()
+                                    this.btnCancelar()
                                 } />
 
-                            <Button class='waves-effect waves-light btn modal-close'
+                            <Button class='waves-effect waves-light btn '
                                 classIcon='right'
                                 icone='send' name='Cadastrar'
                                 onClick={() => this.handleClick()

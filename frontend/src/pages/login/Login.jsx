@@ -16,21 +16,20 @@ class Login extends Component {
     constructor() {
         super();
         this.state = {
-            login: 'asd',
+            login: '',
             senha: '',
-            href: ''
         }
     }
 
-    async validarLogin() {
-        const usuario = await Api.validarLogin("this.state.login");
-        if (usuario) {
-            this.setState({
-                href: 'app/dashboard'
-            })
-        }
-        console.log("a", usuario);
+    async validarLogin(event) {
+        const usuario = await Api.validarLogin(this.state.login, this.state.senha);
 
+        if (usuario.data.dados.length > 0) {
+            const { history } = this.props;
+            history.push('/app/dashboard');
+        } else {
+            document.getElementById('validar_login').innerText = 'Usuário ou Senha incorreto';
+        }
     }
 
     render() {
@@ -44,6 +43,7 @@ class Login extends Component {
                                     <h1 className="center-align">Login</h1>
                                 </div>
                                 <div className='row' id='campos'>
+                                    <span style={{color: 'red'}} id='validar_login'></span>
                                     <InputAndLabel
                                         typeInput='input-field col s12 m12 l12'
                                         icone='mail_outline'
@@ -66,8 +66,9 @@ class Login extends Component {
 
                                 <Button class='waves-effect waves-light btn btn-logar'
                                     name='Logar'
-                                    href={this.state.href}
-                                    onClick={() => this.validarLogin()} />
+                                    onClick={() => this.validarLogin()}
+                                    type='button'
+                                />
 
                                 <div id="cadastrar" className="row">
                                     <Usuario />

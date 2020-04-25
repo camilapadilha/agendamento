@@ -17,32 +17,85 @@ class Equipamento extends Component {
         this.state = {
             dados: {
                 id_equipamento: '',
-                nome: '',
+                nome_equipamento: '',
                 marca: '',
                 modelo: '',
+                descricao: '',
             }
         }
         this.handleClick = this.handleClick.bind(this);
-    }
-
-    limparCampos() {
-        this.setState({
-            dados: {
-                id_equipamento: '',
-                nome: '',
-                marca: '',
-                modelo: '',
-            },
-        });
     }
 
     componentDidMount() {
         M.AutoInit();
     }
 
-    async handleClick() {
-        await Api.salvarEquipamentos(this.state.dados);
+    limparCampos() {
+        this.setState({
+            dados: {
+                id_equipamento: '',
+                nome_equipamento: '',
+                marca: '',
+                modelo: '',
+                descricao: '',
+            },
+        });
+    }
+
+    inicializarForms() {
+        document.getElementById('label_nome').setAttribute('class', 'active');
+        document.getElementById('label_marca').setAttribute('class', 'active');
+        document.getElementById('label_modelo').setAttribute('class', 'active');
+        document.getElementById('label_descricao').setAttribute('class', 'active');
+    }
+
+    limparInicializacaoForms() {
+        document.getElementById('label_nome').setAttribute('class', '');
+        document.getElementById('label_marca').setAttribute('class', '');
+        document.getElementById('label_modelo').setAttribute('class', '');
+        document.getElementById('label_descricao').setAttribute('class', '');
+    }
+
+    limparValidacoes() {
+        document.getElementById('validar_nome').innerText = '';
+        document.getElementById('validar_marca').innerText = '';
+        document.getElementById('validar_modelo').innerText = '';
+        document.getElementById('validar_descricao').innerText = '';
+    }
+
+    btnCancelar() {
         this.limparCampos();
+        this.limparValidacoes();
+        this.limparInicializacaoForms();
+    }
+
+    async handleClick() {
+        let pode_salvar = true;
+        this.limparValidacoes();
+        if (this.state.dados.nome_equipamento == '') {
+            pode_salvar = false;
+            document.getElementById('validar_nome').innerText = 'Campo Obrigattório.';
+        }
+        if (this.state.dados.marca == '') {
+            pode_salvar = false;
+            document.getElementById('validar_marca').innerText = 'Campo Obrigattório.';
+        }
+        if (this.state.dados.modelo == '') {
+            pode_salvar = false;
+            document.getElementById('validar_modelo').innerText = 'Campo Obrigattório.';
+        }
+        if (this.state.dados.descricao == '') {
+            pode_salvar = false;
+            document.getElementById('validar_descricao').innerText = 'Campo Obrigattório.';
+        }
+        if (pode_salvar) {
+            var elem = document.getElementById('modal');
+            var instance = M.Modal.getInstance(elem);
+            await Api.salvarEquipamentos(this.state.dados);
+            instance.close();
+            this.limparValidacoes();
+            this.limparCampos();
+        }
     }
     render() {
         const { clickButtonEdit } = this.props;
@@ -53,12 +106,14 @@ class Equipamento extends Component {
             this.setState({
                 dados: {
                     id_equipamento: this.props.equipamento.value.id_equipamento,
-                    nome: this.props.equipamento.value.nome,
+                    nome_equipamento: this.props.equipamento.value.nome_equipamento,
                     modelo: this.props.equipamento.value.modelo,
                     marca: this.props.equipamento.value.marca,
+                    descricao: this.props.equipamento.value.descricao,
                 },
             });
             clickButtonEdit('', '');
+            this.inicializarForms();
         }
         return (
             <div className="row">
@@ -77,10 +132,12 @@ class Equipamento extends Component {
                                 onChange={event => this.setState({
                                     dados: {
                                         ...this.state.dados,
-                                        nome: event.target.value
+                                        nome_equipamento: event.target.value
                                     }
                                 })}
-                                value={this.state.dados.nome} />
+                                value={this.state.dados.nome_equipamento}
+                                idSpam='validar_nome'
+                                idLabel='label_nome' />
                             <InputAndLabel
                                 icone='local_offer' idAndFor='marca'
                                 type='text' label='Marca'
@@ -91,7 +148,9 @@ class Equipamento extends Component {
                                         marca: event.target.value
                                     }
                                 })}
-                                value={this.state.dados.marca} />
+                                value={this.state.dados.marca}
+                                idSpam='validar_marca'
+                                idLabel='label_marca' />
                             <InputAndLabel
                                 icone='add_to_queue' idAndFor='modelo'
                                 type='text' label='Modelo'
@@ -102,12 +161,23 @@ class Equipamento extends Component {
                                         modelo: event.target.value
                                     }
                                 })}
-                                value={this.state.dados.modelo} />
+                                value={this.state.dados.modelo}
+                                idSpam='validar_modelo'
+                                idLabel='label_modelo' />
 
                             <div className="input-field col s6">
                                 <i className="material-icons prefix">mode_edit</i>
-                                <textarea id="icon_prefix2" className="materialize-textarea"></textarea>
-                                <label htmlFor="icon_prefix2">Descrição</label>
+                                <textarea id="icon_prefix2" className="materialize-textarea"
+                                    onChange={
+                                        event => this.setState({
+                                            dados: {
+                                                ...this.state.dados,
+                                                descricao: event.target.value,
+                                            }
+                                        })}
+                                    value={this.state.dados.descricao} />
+                                <label id='label_descricao' htmlFor="icon_prefix2">Descrição</label>
+                                <span style={{ color: 'red' }} id='validar_descricao'></span>
                             </div>
                         </form>
                     </div>
@@ -116,8 +186,8 @@ class Equipamento extends Component {
                             <Button class='waves-effect waves-light btn modal-close'
                                 classIcon='right'
                                 icone='clear' name='Cancelar'
-                                onClick={() => this.limparCampos()} />
-                            < Button class='waves-effect waves-light btn modal-close'
+                                onClick={() => this.btnCancelar()} />
+                            < Button class='waves-effect waves-light btn '
                                 classIcon='right'
                                 icone='send' name='Cadastrar'
                                 onClick={() => this.handleClick()} />

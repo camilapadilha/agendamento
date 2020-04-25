@@ -18,28 +18,58 @@ class Funcao extends Component {
         this.state = {
             dados: {
                 id_funcao: '',
-                nome: '',
+                nome_funcao: '',
             },
         }
         this.handleClick = this.handleClick.bind(this);
-    }
-
-    limparCampos() {
-        this.setState({
-            dados: {
-                id_funcao: '',
-                nome: '',
-            },
-        });
     }
 
     componentDidMount() {
         M.AutoInit();
     }
 
-    async handleClick() {
-        await Api.salvarFuncao(this.state.dados);
+    limparCampos() {
+        this.setState({
+            dados: {
+                id_funcao: '',
+                nome_funcao: '',
+            },
+        });
+    }
+
+    inicializarForms() {
+        document.getElementById('label_nome').setAttribute('class', 'active');
+    }
+
+    limparInicializacaoForms() {
+        document.getElementById('label_nome').setAttribute('class', '');
+    }
+
+    limparValidacoes() {
+        document.getElementById('validar_nome').innerText = '';
+    }
+
+    btnCancelar() {
         this.limparCampos();
+        this.limparValidacoes();
+        this.limparInicializacaoForms();
+    }
+
+    async handleClick() {
+        let pode_salvar = true;
+        this.limparValidacoes();
+        if (this.state.dados.nome_funcao == '') {
+            pode_salvar = false;
+            document.getElementById('validar_nome').innerText = 'Campo Obrigattório.';
+        }
+        if (pode_salvar) {
+            var elem = document.getElementById('modal');
+            var instance = M.Modal.getInstance(elem);
+            await Api.salvarFuncao(this.state.dados);
+            instance.close();
+            this.limparValidacoes();
+            this.limparCampos();
+        }
     }
 
     render() {
@@ -49,10 +79,11 @@ class Funcao extends Component {
             this.setState({
                 dados: {
                     id_funcao: this.props.funcao.value.id_funcao,
-                    nome: this.props.funcao.value.nome,
+                    nome_funcao: this.props.funcao.value.nome_funcao,
                 },
             });
             clickButtonEdit('', '');
+            this.inicializarForms();
         }
 
         return (
@@ -74,20 +105,23 @@ class Funcao extends Component {
                                         onChange={event => this.setState({
                                             dados: {
                                                 ...this.state.dados,
-                                                nome: event.target.value
+                                                nome_funcao: event.target.value
                                             }
                                         })}
-                                        value={this.state.dados.nome} />
+                                        value={this.state.dados.nome_funcao}
+                                        idSpam='validar_nome'
+                                        idLabel='label_nome' />
                                 </div>
                                 <div className='row right-align' id='botoes'>
                                     <Button class='waves-effect waves-light btn modal-close'
                                         classIcon='right'
                                         icone='clear' name='Cancelar'
-                                        onClick={() => this.limparCampos()} />
-                                    <Button class='waves-effect waves-light btn modal-close'
+                                        onClick={() => this.btnCancelar()} />
+                                    <Button class='waves-effect waves-light btn '
                                         classIcon='right'
                                         icone='send' name='Cadastrar'
-                                        onClick={() => this.handleClick()} />
+                                        onClick={() => this.handleClick()}
+                                        type='button' />
                                 </div>
                             </div>
                         </form>

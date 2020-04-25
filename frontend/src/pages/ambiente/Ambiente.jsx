@@ -17,7 +17,7 @@ class Ambiente extends Component {
         this.state = {
             dados: {
                 id_ambiente: '',
-                nome: '',
+                nome_ambiente: '',
                 num_sala: '',
                 capacidade_publico: '',
                 quantidade_computadores: '',
@@ -26,11 +26,16 @@ class Ambiente extends Component {
         }
         this.handleClick = this.handleClick.bind(this);
     }
+
+    componentDidMount() {
+        M.AutoInit();
+    }
+
     limparState() {
         this.setState({
             dados: {
                 id_ambiente: '',
-                nome: '',
+                nome_ambiente: '',
                 num_sala: '',
                 capacidade_publico: '',
                 quantidade_computadores: '',
@@ -39,13 +44,55 @@ class Ambiente extends Component {
         });
 
     }
-    componentDidMount() {
-        M.AutoInit();
+
+    inicializarForms() {
+        document.getElementById('label_nome').setAttribute('class', 'active');
+        document.getElementById('label_num_sala').setAttribute('class', 'active');
+        document.getElementById('label_capacidade_pub').setAttribute('class', 'active');
+        document.getElementById('label_quant_comp').setAttribute('class', 'active');
+    }
+
+    limparInicializacaoForms() {
+        document.getElementById('label_nome').setAttribute('class', '');
+        document.getElementById('label_num_sala').setAttribute('class', '');
+        document.getElementById('label_capacidade_pub').setAttribute('class', '');
+        document.getElementById('label_quant_comp').setAttribute('class', '');
+    }
+
+    btnCancelar() {
+        this.limparState();
+        this.limparValidacoes();
+        this.limparInicializacaoForms();
+    }
+
+    limparValidacoes() {
+        document.getElementById('validar_nome').innerText = '';
+        document.getElementById('validar_num_sala').innerText = '';
+        document.getElementById('validar_capacidade_pub').innerText = '';
     }
 
     async handleClick() {
-        await Api.salvarAmbiente(this.state.dados);
-        this.limparState();
+        let pode_salvar = true;
+        if (this.state.dados.nome_ambiente == '') {
+            pode_salvar = false;
+            document.getElementById('validar_nome').innerText = 'Campo Obrigattório.';
+        }
+        if (this.state.dados.num_sala == '') {
+            pode_salvar = false;
+            document.getElementById('validar_num_sala').innerText = 'Campo Obrigattório.';
+        }
+        if (this.state.dados.capacidade_publico == '') {
+            pode_salvar = false;
+            document.getElementById('validar_capacidade_pub').innerText = 'Campo Obrigattório.';
+        }
+        if (pode_salvar) {
+            var elem = document.getElementById('modal');
+            var instance = M.Modal.getInstance(elem);
+            instance.close();
+            await Api.salvarAmbiente(this.state.dados);
+            this.limparValidacoes();
+            this.limparState();
+        }
     }
     render() {
         const { clickButtonEdit, ambiente } = this.props;
@@ -54,7 +101,7 @@ class Ambiente extends Component {
             this.setState({
                 dados: {
                     id_ambiente: this.props.ambiente.value.id_ambiente,
-                    nome: this.props.ambiente.value.nome,
+                    nome_ambiente: this.props.ambiente.value.nome_ambiente,
                     num_sala: this.props.ambiente.value.num_sala,
                     capacidade_publico: this.props.ambiente.value.capacidade_publico,
                     quantidade_computadores: this.props.ambiente.value.quantidade_computadores,
@@ -62,6 +109,7 @@ class Ambiente extends Component {
                 },
             });
             clickButtonEdit('', '');
+            this.inicializarForms();
         }
         return (
             <div className="row">
@@ -80,10 +128,12 @@ class Ambiente extends Component {
                                 onChange={event => this.setState({
                                     dados: {
                                         ...this.state.dados,
-                                        nome: event.target.value
+                                        nome_ambiente: event.target.value
                                     }
                                 })}
-                                value={this.state.dados.nome} />
+                                value={this.state.dados.nome_ambiente}
+                                idSpam='validar_nome' 
+                                idLabel='label_nome'/>
 
                             <InputAndLabel
                                 icone='home' idAndFor='numSala'
@@ -95,7 +145,9 @@ class Ambiente extends Component {
                                         num_sala: event.target.value
                                     }
                                 })}
-                                value={this.state.dados.num_sala} />
+                                value={this.state.dados.num_sala}
+                                idSpam='validar_num_sala' 
+                                idLabel='label_num_sala'/>
 
                             <InputAndLabel
                                 icone='group' idAndFor='capacidadePub'
@@ -107,7 +159,9 @@ class Ambiente extends Component {
                                         capacidade_publico: event.target.value
                                     }
                                 })}
-                                value={this.state.dados.capacidade_publico} />
+                                value={this.state.dados.capacidade_publico}
+                                idSpam='validar_capacidade_pub' 
+                                idLabel='label_capacidade_pub'/>
 
                             <InputAndLabel
                                 icone='desktop_windows' idAndFor='quantComp'
@@ -119,7 +173,9 @@ class Ambiente extends Component {
                                         quantidade_computadores: event.target.value
                                     }
                                 })}
-                                value={this.state.dados.quantidade_computadores} />
+                                value={this.state.dados.quantidade_computadores}
+                                idSpam='validar_quant_comp'
+                                idLabel='label_quant_comp' />
 
                             <div className="radioPI">
                                 <h1>Possui Internet</h1>
@@ -157,11 +213,14 @@ class Ambiente extends Component {
                             <Button class='waves-effect waves-light btn modal-close'
                                 classIcon='right'
                                 icone='clear' name='Cancelar'
-                                onClick={() => this.limparState()} />
-                            <Button class='waves-effect waves-light btn modal-close'
+                                onClick={() => this.btnCancelar()} />
+                            <Button
+                                id="btn_salvar"
+                                class='waves-effect waves-light btn'
                                 classIcon='right'
                                 icone='send' name='Cadastrar'
-                                onClick={() => this.handleClick()} />
+                                onClick={() => this.handleClick()}
+                                type='button' />
                         </div>
                     </div>
                 </div>

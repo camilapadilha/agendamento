@@ -8,7 +8,7 @@ const routes = express();
 
 routes.get('/validarLogin', async (req, res) => {
     try {
-        const ret = await usuarioController.validarLogin();
+        const ret = await usuarioController.validarLogin(req.query.login, req.query.senha);
         res.send({
             status: true,
             dados: ret,
@@ -141,13 +141,27 @@ routes.get('/buscarUsuario', async (req, res) => {
         });
     }
 });
+routes.get('/buscarDisciplinasPessoa', async (req, res) => {
+    try {
+        const ret = await usuarioController.buscarDisciplinasPessoa(req.query.id_pessoa);
+        res.send({
+            status: true,
+            dados: ret,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
 routes.post('/salvarUsuario', async (req, res) => {
     let dados = req.body;
     if (req.url.includes('?')) {
         dados = await req.query;
     }
     try {
-        await usuarioController.salvar(dados.entidade);
+        await usuarioController.salvar(dados.entidade, dados.listDisciplinasExcluidas);
 
         res.send({
             status: true,

@@ -51,7 +51,7 @@ class DisciplinaList extends Component {
 
         return currentPosts.map(d => (
             <tr key={d.id_disciplina}>
-                <td style={{ width: '87%' }}>{d.nome}</td>
+                <td style={{ width: '87%' }}>{d.nome_disciplina}</td>
                 <td style={{ width: '13%' }}>
                     <Button class="btn modal-trigger btn-icon " href="#modal"
                         onClick={() =>
@@ -93,7 +93,7 @@ class DisciplinaList extends Component {
                     paginate={paginate}
                 />
                 <ModalConfirmacao
-                    item={this.state.item ? this.state.item.nome : null}
+                    item={this.state.item ? this.state.item.nome_disciplina : null}
                     onClick={() => {
                         this.botaoExcluir(this.state.item)
                     }

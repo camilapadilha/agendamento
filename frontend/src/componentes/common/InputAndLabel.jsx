@@ -8,7 +8,8 @@ export default props => (
         onChange={props.onChange}
         value={props.value}
         />
-        <label htmlFor={props.idAndFor}>{props.label}</label>
+        <label id={props.idLabel} htmlFor={props.idAndFor}>{props.label}</label>
+        <span style={{color: 'red'}} id={props.idSpam}>{props.validacao}</span>
     </div>
 
 )

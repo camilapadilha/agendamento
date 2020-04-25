@@ -3,7 +3,7 @@ import axios from 'axios'
 export default class Api {
 
     static async validarLogin(login, senha) {
-        return await axios.get('http://localhost:4000/validarLogin?login=', { login });
+        return await axios.get(`http://localhost:4000/validarLogin?login=${login}&&senha=${senha}`);
     }
 
     static async buscarFuncao() {
@@ -32,8 +32,12 @@ export default class Api {
         return await axios.get('http://localhost:4000/buscarUsuario');
     }
 
-    static async salvarUsuario(entidade) {
-        return await axios.post('http://localhost:4000/salvarUsuario', { entidade });
+    static async buscarDisciplinasPessoa(id_pessoa) {
+        return await axios.get(`http://localhost:4000/buscarDisciplinasPessoa?id_pessoa=${id_pessoa}`);
+    }
+
+    static async salvarUsuario(entidade, listDisciplinasExcluidas) {
+        return await axios.post('http://localhost:4000/salvarUsuario', { entidade, listDisciplinasExcluidas });
     }
 
     static async excluirUsuario(entidade) {

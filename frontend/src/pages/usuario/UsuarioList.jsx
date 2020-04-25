@@ -27,6 +27,8 @@ class UsuarioList extends Component {
 
     async componentWillMount() {
         const usuario = await Api.buscarUsuario();
+        console.log("a", usuario.data.dados);
+        
         this.setState({
             list: usuario.data.dados,
             acao: 'listar'
@@ -51,7 +53,7 @@ class UsuarioList extends Component {
 
         return currentPosts.map(u => (
             <tr key={u.id_usuario}>
-                <td style={{ width: '27%' }}>{u.nome}</td>
+                <td style={{ width: '27%' }}>{u.nome_pessoa}</td>
                 <td style={{ width: '20%' }}>{u.login}</td>
                 <td style={{ width: '15%' }}>{u.cpf}</td>
                 <td style={{ width: '25%' }}>{u.email_institucional}</td>
@@ -92,7 +94,8 @@ class UsuarioList extends Component {
                             <th id="th_acoes">Ações</th>
                         </tr>
                     )}
-                    modal={(<Usuario list="true" />)} pagination={<Pagination
+                    modal={(<Usuario list="true"/>)}
+                    pagination={<Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.state.list.length}
                         paginate={paginate}
@@ -101,7 +104,7 @@ class UsuarioList extends Component {
 
                 </Table>
                 <ModalConfirmacao
-                    item={this.state.item ? this.state.item.nome : null}
+                    item={this.state.item ? this.state.item.nome_pessoa : null}
                     onClick={() => {
                         this.botaoExcluir(this.state.item)
                     }

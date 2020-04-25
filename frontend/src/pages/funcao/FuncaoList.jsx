@@ -52,7 +52,7 @@ class FuncaoList extends Component {
 
         return currentPosts.map(f => (
             <tr key={f.id_funcao}>
-                <td style={{ width: '87%' }}>{f.nome}</td>
+                <td style={{ width: '87%' }}>{f.nome_funcao}</td>
                 <td style={{ width: '13%' }}>
                     <Button class="btn modal-trigger btn-icon " href="#modal"
                         onClick={() =>
@@ -96,7 +96,7 @@ class FuncaoList extends Component {
                     />
                 </Table>
                 <ModalConfirmacao
-                    item={this.state.item ? this.state.item.nome : null}
+                    item={this.state.item ? this.state.item.nome_funcao : null}
                     onClick={() => {
                         this.botaoExcluir(this.state.item)
                     }

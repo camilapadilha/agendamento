@@ -50,7 +50,7 @@ class EquipamentoList extends Component {
 
         return currentPosts.map(e => (
             <tr key={e.id_equipamento}>
-                <td style={{ width: '30%' }}>{e.nome}</td>
+                <td style={{ width: '30%' }}>{e.nome_equipamento}</td>
                 <td style={{ width: '29%' }}>{e.marca}</td>
                 <td style={{ width: '28%' }}>{e.modelo}</td>
                 <td style={{ width: '13%' }}>
@@ -97,7 +97,7 @@ class EquipamentoList extends Component {
                         paginate={paginate}
                     />
                     <ModalConfirmacao
-                        item={this.state.item ? this.state.item.nome : null}
+                        item={this.state.item ? this.state.item.nome_equipamento : null}
                         onClick={() => {
                             this.botaoExcluir(this.state.item)
                         }
