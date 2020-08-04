@@ -42,7 +42,6 @@ class Ambiente extends Component {
                 possui_internet: '',
             },
         });
-
     }
 
     inicializarForms() {
@@ -75,15 +74,15 @@ class Ambiente extends Component {
         let pode_salvar = true;
         if (this.state.dados.nome_ambiente == '') {
             pode_salvar = false;
-            document.getElementById('validar_nome').innerText = 'Campo Obrigattório.';
+            document.getElementById('validar_nome').innerText = 'Campo Obrigatório.';
         }
         if (this.state.dados.num_sala == '') {
             pode_salvar = false;
-            document.getElementById('validar_num_sala').innerText = 'Campo Obrigattório.';
+            document.getElementById('validar_num_sala').innerText = 'Campo Obrigatório.';
         }
         if (this.state.dados.capacidade_publico == '') {
             pode_salvar = false;
-            document.getElementById('validar_capacidade_pub').innerText = 'Campo Obrigattório.';
+            document.getElementById('validar_capacidade_pub').innerText = 'Campo Obrigatório.';
         }
         if (pode_salvar) {
             var elem = document.getElementById('modal');
@@ -210,13 +209,13 @@ class Ambiente extends Component {
                     </div>
                     <div className="modal-footer">
                         <div className='row right-align' id='botoes'>
-                            <Button class='waves-effect waves-light btn modal-close'
+                            <Button class='waves-light btn modal-close'
                                 classIcon='right'
                                 icone='clear' name='Cancelar'
                                 onClick={() => this.btnCancelar()} />
                             <Button
                                 id="btn_salvar"
-                                class='waves-effect waves-light btn'
+                                class='waves-light btn'
                                 classIcon='right'
                                 icone='send' name='Cadastrar'
                                 onClick={() => this.handleClick()}
@@ -228,7 +227,6 @@ class Ambiente extends Component {
         )
     }
 }
-Ambiente = reduxForm({ form: 'Ambiente' })(Ambiente)
 const mapStateToProps = store => ({ ambiente: store.ambienteReducer.ambiente })
 const mapDispatchToProps = dispatch => bindActionCreators({ clickButtonEdit }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Ambiente)

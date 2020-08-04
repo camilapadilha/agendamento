@@ -101,7 +101,7 @@ class Disciplina extends Component {
                                 <InputAndLabel
                                     icone='import_contacts' idAndFor='nome'
                                     type='text' label='Nome da Disciplina'
-                                    typeInput='input-field col m4'
+                                    typeInput='input-field col s4 m4 l4'
                                     onChange={event => this.setState({
                                         dados: {
                                             ...this.state.dados,
@@ -111,7 +111,6 @@ class Disciplina extends Component {
                                     value={this.state.dados.nome_disciplina}
                                     idSpam='validar_nome'
                                     idLabel='label_nome' />
-
                             </div>
                         </form>
                     </div>

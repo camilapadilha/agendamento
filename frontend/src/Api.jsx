@@ -56,8 +56,8 @@ export default class Api {
         return await axios.post('http://localhost:4000/excluirEquipamento', { entidade });
     }
 
-    static async buscarAmbiente() {
-        return await axios.get('http://localhost:4000/buscarAmbiente');
+    static async buscarAmbiente(id) {
+        return await axios.get(`http://localhost:4000/buscarAmbiente?id=${id}`);
     }
 
     static async salvarAmbiente(entidade) {
@@ -66,5 +66,9 @@ export default class Api {
 
     static async excluirAmbiente(entidade) {
         return await axios.post('http://localhost:4000/excluirAmbiente', { entidade });
+    }
+
+    static async salvarHorarioAmbiente(entidade) {
+        return await axios.post('http://localhost:4000/salvarHorarioAmbiente', { entidade });
     }
 }

@@ -132,11 +132,11 @@ class Usuario extends Component {
             return false;
         }
     }
-    
+
     validarEmailInstitucional(value) {
         let indice = value.indexOf('@') + 1;
         let email = value.slice(indice);
-        
+
         if (this.validarEmail(value)) {
             if (email != 'escola.pr.gov.br') {
                 return false;
@@ -347,7 +347,7 @@ class Usuario extends Component {
                             <InputAndLabel
                                 icone='account_circle' idAndFor='nome'
                                 type='text' label='Nome Completo'
-                                typeInput='input-field col m4'
+                                typeInput='input-field col s4 m4 l4'
                                 idLabel='label_nome'
                                 onChange={event => this.setState({
                                     dados: {
@@ -361,7 +361,7 @@ class Usuario extends Component {
                             <InputAndLabel
                                 icone='credit_card' idAndFor='cpf'
                                 type='text' label='CPF'
-                                typeInput='input-field col m4'
+                                typeInput='input-field col s4 m4 l4'
                                 idLabel='label_cpf'
                                 onChange={event => this.setState({
                                     dados: {
@@ -374,7 +374,7 @@ class Usuario extends Component {
                             <InputAndLabel
                                 icone='phone' idAndFor='celular'
                                 type='text' label='Celular'
-                                typeInput='input-field col m4'
+                                typeInput='input-field col s4 m4 l4'
                                 idLabel='label_cel'
                                 onChange={event => this.setState({
                                     dados: {
@@ -389,7 +389,7 @@ class Usuario extends Component {
                                 <InputAndLabel
                                     icone='contact_mail' idAndFor='emailPessoal'
                                     type='text' label='Email Pessoal'
-                                    typeInput='input-field col m4'
+                                    typeInput='input-field col s4 m4 l4'
                                     idLabel='label_emailPessoal'
                                     onChange={event => this.setState({
                                         dados: {
@@ -399,35 +399,38 @@ class Usuario extends Component {
                                     })}
                                     value={this.state.dados.email_pessoal}
                                     idSpam='validar_email_pessoal' />
-
-                                <Select id="funcoes"
-                                    label='Selecione sua Função'
-                                    value={this.state.dados.funcao}
-                                    onChange={e =>
-                                        this.setState({
-                                            dados: {
-                                                ...this.state.dados,
-                                                funcao: e.target.value
-                                            }
-                                        })
-                                    }
-                                    idSpam='validar_funcao' >
-                                    {this.renderOptionsFuncao()}
-                                </Select>
+                                <div className="input-field col s4 m4 l4">
+                                    <Select id="funcoes"
+                                        label='Selecione sua Função'
+                                        value={this.state.dados.funcao}
+                                        onChange={e =>
+                                            this.setState({
+                                                dados: {
+                                                    ...this.state.dados,
+                                                    funcao: e.target.value
+                                                }
+                                            })
+                                        }
+                                        idSpam='validar_funcao' >
+                                        {this.renderOptionsFuncao()}
+                                    </Select>
+                                </div>
                             </div>
                         </div>
                         <div id="panelDisciplinas" className="row">
-                            <div className="col-md">
+                            <div className="col s12 m12 l12">
                                 <div className="row">
-                                    <Select
-                                        id='disciplinas'
-                                        label='Selecione suas disciplinas'
-                                        value={this.state.disciplina}
-                                        onChange={e => this.setState({
-                                            disciplina: this.state.disciplinaSelect[e.target.value]
-                                        })}>
-                                        {this.renderOptionsDisciplina()}
-                                    </Select>
+                                    <div className="input-field col s4 m4 l4">
+                                        <Select
+                                            id='disciplinas'
+                                            label='Selecione suas disciplinas'
+                                            value={this.state.disciplina}
+                                            onChange={e => this.setState({
+                                                disciplina: this.state.disciplinaSelect[e.target.value]
+                                            })}>
+                                            {this.renderOptionsDisciplina()}
+                                        </Select>
+                                    </div>
                                     <Button class='waves-effect waves-light btn botaoAdd'
                                         classIcon='right'
                                         icone='add' name='Adicionar'
@@ -457,7 +460,7 @@ class Usuario extends Component {
                             <InputAndLabel
                                 icone='mail_outline' idAndFor='emailInstitucional'
                                 type='text' label='Email Institucional'
-                                typeInput='input-field col m4'
+                                typeInput='input-field col s4 m4 l4'
                                 idLabel='label_emailInstitucional'
                                 onChange={event => this.setState({
                                     dados: {
@@ -470,7 +473,7 @@ class Usuario extends Component {
                             <InputAndLabel
                                 icone='lock_outline' idAndFor='senha'
                                 type='password' label='Senha'
-                                typeInput='input-field col m4'
+                                typeInput='input-field col s4 m4 l4'
                                 onChange={event => this.setState({
                                     dados: {
                                         ...this.state.dados,
@@ -482,7 +485,7 @@ class Usuario extends Component {
                             <InputAndLabel
                                 icone='lock_outline' idAndFor='confirmarSenha'
                                 type='password' label='Confirmar Senha'
-                                typeInput='input-field col m4'
+                                typeInput='input-field col s4 m4 l4'
                                 onChange={event => this.setState({
                                     ...this.state,
                                     confirmar_senha: event.target.value

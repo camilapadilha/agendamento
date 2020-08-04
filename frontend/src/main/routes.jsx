@@ -9,6 +9,7 @@ import EquipamentoList from '../pages/equipamento/EquipamentoList';
 import DisciplinaList from '../pages/disciplina/DisciplinaList';
 import FuncaoList from '../pages/funcao/FuncaoList';
 import Agendamento from '../pages/agendamento/Agendamento.jsx';
+import AgendamentoAmbiente from '../pages/agendamento/agendamento_ambientes/Ambientes.jsx';
 import Nav from '../componentes/layout/Nav';
 
 
@@ -25,6 +26,7 @@ export default function Routes() {
                 <Route path='/app/disciplinaList' component={DisciplinaList} />
                 <Route path='/app/funcaoList' component={FuncaoList} />
                 <Route path='/app/agendamento' component={Agendamento} />
+                <Route path='/app/agendamento_ambiente' component={AgendamentoAmbiente} />
                 {/* <Redirect from='*' to='/' /> */}
             </Switch>
         </BrowserRouter>

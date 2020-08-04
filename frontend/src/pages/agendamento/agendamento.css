@@ -1,4 +1,4 @@
-#botoesAgenda a{
+#botoesAgenda a {
     width: 300px;
     height: 90px;
     margin-bottom: 10px;
@@ -10,35 +10,46 @@
     justify-content: center;
     align-items: center;
 }
-#botoesAgenda{
+
+#botoesAgenda {
     margin-top: 150px;
 }
 
-#agenda{
-    margin-left: 50px;
+#agenda {
+    margin-left: 100px;
+    margin-right: 100px;
     
 }
-#filtros{
-    margin-left: 50px;
+
+#filtros {
+    margin-left: 100px;
     margin-top: 50px;
 }
-.tableAgenda{
+
+.tableAgenda {
     margin-bottom: 50px;
 }
-#cabecalho h1{
+
+#cabecalho h1 {
     padding:0px;
     margin:0px;
     margin-top: 10px;
    
 }
-#cabecalho{
+
+#cabecalho {
     padding-top: 5px;
     padding-bottom: 10px;
 }
-.tableAgenda td, .tableAgenda th{
+
+.tableAgenda td, .tableAgenda th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-  }
+}
+
+.mes_agendamento h2, .periodo_agendamento h2, .lab_agendamento h2 {
+    font-size: 20px;
+}
 
 

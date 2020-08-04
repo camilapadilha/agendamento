@@ -4,22 +4,22 @@ const con = require('../server');
 const query = require('../util/db_util');
 
 module.exports = {
-    buscar(id) {
-        let sql = '';
-        if (id != null && id != 'undefined') {
-            sql = `select * from ambiente where id_ambiente=${id}`;
-        } else {
-            sql = 'select * from ambiente';
-        }
+    buscar() {
         return new Promise((resolve, reject) => {
-            con.query(sql, (err, rows, fields) => {
-                if (!err) {
-                    resolve(rows);
-                }
-                else {
-                    console.log("errooo", err);
-                }
-            });
+            con.query("SELECT * FROM agenda a "
+                + "INNER JOIN pessoa ps "
+                + "ON a.id_pessoa=ps.id_pessoa "
+                + "LEFT JOIN equipamento e "
+                + "ON a.id_equipamento=e.id_equipamento "
+                + "LEFT JOIN  ambiente ab "
+                + "ON a.id_ambiente=ab.id_ambiente", (err, rows, fields) => {
+                    if (!err) {
+                        resolve(rows);
+                    }
+                    else {
+                        console.log("errooo", err);
+                    }
+                });
         });
     },
 
@@ -27,11 +27,10 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let query = "";
             let sql = "";
-            if (entidade.id_ambiente) {
-                sql = `update ambiente set ? where id_ambiente = ${entidade.id_ambiente}`;
-            } else {
-                sql = 'insert into ambiente set ? ';
-            }
+
+            sql = `INSERT INTO agenda (data_agendamento, horario_aula, turno, id_pessoa, id_ambiente)
+            VALUES ('${entidade.dia_semana}',${entidade.horario_aula},'${entidade.periodo}', 36, ${entidade.laboratorio.id_ambiente})`;
+
             query = con.query(sql, entidade, (err, rows, fields) => {
                 if (!err) {
                     resolve(rows);
@@ -46,7 +45,7 @@ module.exports = {
     excluir(entidade) {
         return new Promise((resolve, reject) => {
             let query = "";
-            let sql = `delete from ambiente where id_ambiente = ${entidade.id_ambiente}`;
+            let sql = `delete from agenda where id_agenda = ${entidade.id_ambiente}`;
             query = con.query(sql, entidade, (err, rows, fields) => {
                 if (!err) {
                     resolve(rows);

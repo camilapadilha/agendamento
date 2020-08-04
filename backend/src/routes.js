@@ -3,6 +3,7 @@ const disciplinaController = require('./controllers/disciplinaController');
 const usuarioController = require('./controllers/usuarioController');
 const equipamentoController = require('./controllers/equipamentoController');
 const ambienteController = require('./controllers/ambienteController');
+const agendamentoAmbienteController = require('./controllers/agendamentoAmbienteController');
 const express = require('express');
 const routes = express();
 
@@ -251,7 +252,7 @@ routes.post('/excluirEquipamento', async (req, res) => {
 
 routes.get('/buscarAmbiente', async (req, res) => {
     try {
-        const ret = await ambienteController.buscar();
+        const ret = await ambienteController.buscar(req.query.id);
         res.send({
             status: true,
             dados: ret,
@@ -303,4 +304,60 @@ routes.post('/excluirAmbiente', async (req, res) => {
         });
     }
 });
+
+routes.get('/buscarHorariosAmbiente', async (req, res) => {
+    try {
+        const ret = await agendamentoAmbienteController.buscar();
+        res.send({
+            status: true,
+            dados: ret,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+
+routes.post('/salvarHorarioAmbiente', async (req, res) => {
+    let dados = req.body;
+    if (req.url.includes('?')) {
+        dados = await req.query;
+    }
+    try {
+        await agendamentoAmbienteController.salvar(dados.entidade);
+
+        res.send({
+            status: true,
+            dados: dados,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+
+routes.post('/excluirHorarioAmbiente', async (req, res) => {
+    let dados = req.body;
+    if (req.url.includes('?')) {
+        dados = await req.query;
+    }
+    try {
+        await agendamentoAmbienteController.excluir(dados.entidade);
+
+        res.send({
+            status: true,
+            dados: dados,
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            erro: error,
+        });
+    }
+});
+
 module.exports = routes;
