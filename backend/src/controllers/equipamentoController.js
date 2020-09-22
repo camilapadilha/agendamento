@@ -17,12 +17,12 @@ module.exports = {
         });
     },
 
-    salvar(entidade) {
+    salvar(entidade, id) {
         return new Promise((resolve, reject) => {
             let query = "";
             let sql = "";
-            if (entidade.id_equipamento) {
-                sql = `update equipamento set ? where id_equipamento = ${entidade.id_equipamento}`;
+            if (id) {
+                sql = `update equipamento set ? where id_equipamento = ${id}`;
             } else {
                 sql = 'insert into equipamento set ? ';
             }

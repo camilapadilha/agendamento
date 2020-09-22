@@ -42,7 +42,7 @@ routes.post('/salvarFuncao', async (req, res) => {
         dados = await req.query;
     }
     try {
-        await funcaoController.salvar(dados.entidade);
+        await funcaoController.salvar(dados.entidade, dados.id);
 
         res.send({
             status: true,
@@ -95,7 +95,7 @@ routes.post('/salvarDisciplina', async (req, res) => {
         dados = await req.query;
     }
     try {
-        await disciplinaController.salvar(dados.entidade);
+        await disciplinaController.salvar(dados.entidade, dados.id);
 
         res.send({
             status: true,
@@ -216,7 +216,7 @@ routes.post('/salvarEquipamento', async (req, res) => {
         dados = await req.query;
     }
     try {
-        await equipamentoController.salvar(dados.entidade);
+        await equipamentoController.salvar(dados.entidade, dados.id);
 
         res.send({
             status: true,
@@ -271,7 +271,7 @@ routes.post('/salvarAmbiente', async (req, res) => {
         dados = await req.query;
     }
     try {
-        await ambienteController.salvar(dados.entidade);
+        await ambienteController.salvar(dados.entidade, dados.id);
 
         res.send({
             status: true,

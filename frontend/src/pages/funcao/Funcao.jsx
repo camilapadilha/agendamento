@@ -16,8 +16,8 @@ class Funcao extends Component {
     constructor() {
         super();
         this.state = {
+            id_funcao: '',
             dados: {
-                id_funcao: '',
                 nome_funcao: '',
             },
         }
@@ -30,8 +30,8 @@ class Funcao extends Component {
 
     limparCampos() {
         this.setState({
+            id_funcao: '',
             dados: {
-                id_funcao: '',
                 nome_funcao: '',
             },
         });
@@ -65,7 +65,7 @@ class Funcao extends Component {
         if (pode_salvar) {
             var elem = document.getElementById('modal');
             var instance = M.Modal.getInstance(elem);
-            await Api.salvarFuncao(this.state.dados);
+            await Api.salvarFuncao(this.state.dados, this.state.id_funcao);
             instance.close();
             this.limparValidacoes();
             this.limparCampos();
@@ -77,8 +77,8 @@ class Funcao extends Component {
 
         if (this.props.funcao.acao == 'edit') {
             this.setState({
+                id_funcao: this.props.funcao.value.id_funcao,
                 dados: {
-                    id_funcao: this.props.funcao.value.id_funcao,
                     nome_funcao: this.props.funcao.value.nome_funcao,
                 },
             });

@@ -15,8 +15,8 @@ class Ambiente extends Component {
     constructor() {
         super();
         this.state = {
+            id_ambiente: '',
             dados: {
-                id_ambiente: '',
                 nome_ambiente: '',
                 num_sala: '',
                 capacidade_publico: '',
@@ -33,8 +33,8 @@ class Ambiente extends Component {
 
     limparState() {
         this.setState({
+            id_ambiente: '',
             dados: {
-                id_ambiente: '',
                 nome_ambiente: '',
                 num_sala: '',
                 capacidade_publico: '',
@@ -88,7 +88,7 @@ class Ambiente extends Component {
             var elem = document.getElementById('modal');
             var instance = M.Modal.getInstance(elem);
             instance.close();
-            await Api.salvarAmbiente(this.state.dados);
+            await Api.salvarAmbiente(this.state.dados, this.state.id_ambiente);
             this.limparValidacoes();
             this.limparState();
         }
@@ -98,8 +98,8 @@ class Ambiente extends Component {
 
         if (this.props.ambiente.acao == 'edit') {
             this.setState({
+                id_ambiente: this.props.ambiente.value.id_ambiente,
                 dados: {
-                    id_ambiente: this.props.ambiente.value.id_ambiente,
                     nome_ambiente: this.props.ambiente.value.nome_ambiente,
                     num_sala: this.props.ambiente.value.num_sala,
                     capacidade_publico: this.props.ambiente.value.capacidade_publico,

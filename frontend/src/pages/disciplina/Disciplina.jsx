@@ -15,8 +15,8 @@ class Disciplina extends Component {
     constructor() {
         super();
         this.state = {
+            id_disciplina: '',
             dados: {
-                id_disciplina: '',
                 nome_disciplina: '',
             }
         }
@@ -30,8 +30,8 @@ class Disciplina extends Component {
 
     limparCampos() {
         this.setState({
+            id_disciplina: '',
             dados: {
-                id_disciplina: '',
                 nome_disciplina: '',
             },
         });
@@ -65,7 +65,7 @@ class Disciplina extends Component {
         if (pode_salvar) {
             var elem = document.getElementById('modal');
             var instance = M.Modal.getInstance(elem);
-            await Api.salvarDisciplina(this.state.dados);
+            await Api.salvarDisciplina(this.state.dados, this.state.id_disciplina);
             instance.close();
             this.limparValidacoes();
             this.limparCampos();
@@ -77,8 +77,8 @@ class Disciplina extends Component {
 
         if (this.props.disciplina.acao == 'edit') {
             this.setState({
+                id_disciplina: this.props.disciplina.value.id_disciplina,
                 dados: {
-                    id_disciplina: this.props.disciplina.value.id_disciplina,
                     nome_disciplina: this.props.disciplina.value.nome_disciplina,
                 },
             });

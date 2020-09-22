@@ -15,8 +15,8 @@ class Equipamento extends Component {
     constructor() {
         super();
         this.state = {
+            id_equipamento: '',
             dados: {
-                id_equipamento: '',
                 nome_equipamento: '',
                 marca: '',
                 modelo: '',
@@ -32,8 +32,8 @@ class Equipamento extends Component {
 
     limparCampos() {
         this.setState({
+            id_equipamento: '',
             dados: {
-                id_equipamento: '',
                 nome_equipamento: '',
                 marca: '',
                 modelo: '',
@@ -91,7 +91,7 @@ class Equipamento extends Component {
         if (pode_salvar) {
             var elem = document.getElementById('modal');
             var instance = M.Modal.getInstance(elem);
-            await Api.salvarEquipamentos(this.state.dados);
+            await Api.salvarEquipamentos(this.state.dados, this.state.id_equipamento);
             instance.close();
             this.limparValidacoes();
             this.limparCampos();
@@ -104,8 +104,8 @@ class Equipamento extends Component {
             console.log("en", this.props.equipamento.value);
 
             this.setState({
+                id_equipamento: this.props.equipamento.value.id_equipamento,
                 dados: {
-                    id_equipamento: this.props.equipamento.value.id_equipamento,
                     nome_equipamento: this.props.equipamento.value.nome_equipamento,
                     modelo: this.props.equipamento.value.modelo,
                     marca: this.props.equipamento.value.marca,

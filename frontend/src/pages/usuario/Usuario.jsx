@@ -204,7 +204,7 @@ class Usuario extends Component {
         if (pode_salvar) {
             var elem = document.getElementById('modal');
             var instance = M.Modal.getInstance(elem);
-            // await Api.salvarUsuario(this.state.dados, listDisciplinasExcluidas);
+            await Api.salvarUsuario(this.state.dados, listDisciplinasExcluidas);
             instance.close();
             this.limparValidacoes();
             this.limparCampos();

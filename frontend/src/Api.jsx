@@ -10,8 +10,8 @@ export default class Api {
         return await axios.get('http://localhost:4000/buscarFuncao');
     }
 
-    static async salvarFuncao(entidade) {
-        return await axios.post('http://localhost:4000/salvarFuncao', { entidade });
+    static async salvarFuncao(entidade, id) {
+        return await axios.post('http://localhost:4000/salvarFuncao', { entidade, id });
     }
 
     static async excluirFuncao(entidade) {
@@ -21,8 +21,8 @@ export default class Api {
         return await axios.get('http://localhost:4000/buscarDisciplina');
     }
 
-    static async salvarDisciplina(entidade) {
-        return await axios.post('http://localhost:4000/salvarDisciplina', { entidade });
+    static async salvarDisciplina(entidade, id) {
+        return await axios.post('http://localhost:4000/salvarDisciplina', { entidade, id });
     }
 
     static async excluirDisciplina(entidade) {
@@ -48,8 +48,8 @@ export default class Api {
         return await axios.get('http://localhost:4000/buscarEquipamento');
     }
 
-    static async salvarEquipamentos(entidade) {
-        return await axios.post('http://localhost:4000/salvarEquipamento', { entidade });
+    static async salvarEquipamentos(entidade, id) {
+        return await axios.post('http://localhost:4000/salvarEquipamento', { entidade, id });
     }
 
     static async excluirEquipamentos(entidade) {
@@ -60,8 +60,8 @@ export default class Api {
         return await axios.get(`http://localhost:4000/buscarAmbiente?id=${id}`);
     }
 
-    static async salvarAmbiente(entidade) {
-        return await axios.post('http://localhost:4000/salvarAmbiente', { entidade });
+    static async salvarAmbiente(entidade, id) {
+        return await axios.post('http://localhost:4000/salvarAmbiente', { entidade, id });
     }
 
     static async excluirAmbiente(entidade) {

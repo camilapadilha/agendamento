@@ -23,12 +23,12 @@ module.exports = {
         });
     },
 
-    salvar(entidade) {
+    salvar(entidade, id) {
         return new Promise((resolve, reject) => {
             let query = "";
             let sql = "";
-            if (entidade.id_ambiente) {
-                sql = `update ambiente set ? where id_ambiente = ${entidade.id_ambiente}`;
+            if (id) {
+                sql = `update ambiente set ? where id_ambiente = ${id}`;
             } else {
                 sql = 'insert into ambiente set ? ';
             }
