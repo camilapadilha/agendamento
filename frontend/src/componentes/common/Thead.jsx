@@ -3,7 +3,7 @@ import React from 'react'
 export default props => (
     <thead>
         <tr>
-            <th></th>
+            <th></th> 
             <th id="1">Segunda-feira</th>
             <th id="2">Terça-feira</th>
             <th id="3">Quarta-feira</th>

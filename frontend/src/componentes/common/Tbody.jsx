@@ -1,23 +1,27 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import tr from '../list/tr'
+import Button from '../../componentes/common/button';
 
 export default class Tbody extends Component {
-    renderLinhas() {
+    renderLinhas(coluna) {
+        var linhas = [];
         for (let l = 1; l <= 7; l++) {
-            if (l[0]) {
-                document.write(<td>{l}</td>)
+            if (l == 1) {
+                linhas.push(<td>{coluna}</td>);
             }
             else {
-                document.write(<td></td>)
+                linhas.push(<td><Button class="btn-flat modal-trigger "
+                href="#modal1" icone='add' /></td>);
             }
         }
+        return linhas;
     }
 
     renderColumns() {
+        var colunas = [];
         for (let c = 1; c <= 5; c++) {
-            document.write(<tr>{this.renderLinhas()}</tr>)
+            colunas.push(<tr>{this.renderLinhas(c)}</tr>);
         }
+        return colunas;
     }
 
     render() {
@@ -26,4 +30,5 @@ export default class Tbody extends Component {
         )
 
     }
+
 }

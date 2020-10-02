@@ -4,7 +4,7 @@ import Tbody from './Tbody';
 
 export default props => (
     <table className="centered tableAgenda">
-        <Thead linha={this.props.renderLinha}/>
+        <Thead linha={props.renderLinha}/>
         <Tbody/>
     </table>
 )
