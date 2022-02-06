@@ -4,13 +4,25 @@ import Button from '../../componentes/common/button';
 export default class Tbody extends Component {
     renderLinhas(coluna) {
         var linhas = [];
+        var horarios = this.props.horariosAgendados;
         for (let l = 1; l <= 7; l++) {
             if (l == 1) {
                 linhas.push(<td>{coluna}</td>);
             }
             else {
-                linhas.push(<td><Button class="btn-flat modal-trigger "
-                href="#modal1" icone='add' /></td>);
+                for(const t of this.props.linhas){
+                    console.log(t.props.children[1]);
+                }
+                for (const d of horarios) {
+                    var dia = d.data_agendamento.slice(8, 10);
+                    
+                    if (1 == 1) {
+
+                    } else {
+                        linhas.push(<td><Button class="btn-flat modal-trigger "
+                            href="#modal1" icone='add' /></td>);
+                    }
+                }
             }
         }
         return linhas;

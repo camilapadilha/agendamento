@@ -68,7 +68,15 @@ export default class Api {
         return await axios.post('http://localhost:4000/excluirAmbiente', { entidade });
     }
 
+    static async buscarHorariosAmbiente() {
+        return await axios.get('http://localhost:4000/buscarHorariosAmbiente');
+    }
+
     static async salvarHorarioAmbiente(entidade) {
         return await axios.post('http://localhost:4000/salvarHorarioAmbiente', { entidade });
+    }
+
+    static async excluirHorarioAmbiente(entidade) {
+        return await axios.post('http://localhost:4000/excluirHorarioAmbiente', { entidade });
     }
 }

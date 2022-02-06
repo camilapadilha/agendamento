@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clickButtonEdit } from '../agendamento/agendamento_ambientes/agendamento_ambienteActions';
 
-// import Select from '../../componentes/common/Select';
-// import Option from '../../componentes/common/Option';
 import TableAgenda from '../../componentes/common/TableAgenda';
 import ModalAgenda from '../../componentes/common/modalAgendamento';
 import M from 'materialize-css';
@@ -22,18 +20,19 @@ class Agendamento extends Component {
             laboratorio: 'Laboratório 1',
             horario_aula: '',
             dia_semana: '',
-            usuario: ''
+            usuario: '',
+            horarios: []
         };
         this.handlerMonth = this.handlerMonth.bind(this);
         this.handlerPeriodo = this.handlerPeriodo.bind(this);
         this.handlerLaboratorio = this.handlerLaboratorio.bind(this);
+        this.buscarHorario = this.buscarHorario.bind(this);
     }
 
     componentDidMount() {
         M.AutoInit();
-        console.log("teste", this.props.agendamento_ambiente.value);
+        this.buscarHorario();
         if (this.props.agendamento_ambiente.value) {
-
             this.setState({
                 ...this.state,
                 mesSelecionado: this.props.agendamento_ambiente.value.mesSelecionado,
@@ -42,7 +41,6 @@ class Agendamento extends Component {
             });
 
         }
-        console.log("state", this.state);
     }
 
     handlerMonth(event) {
@@ -66,6 +64,8 @@ class Agendamento extends Component {
         var rows = [];
         var i;
         var x = 0;
+
+        var count;
         do {
             if (diaIniciaMes == 0) {
                 for (i = 2; i <= quantDiasNoMes; i++) {
@@ -85,6 +85,15 @@ class Agendamento extends Component {
             }
 
         } while (x != diaIniciaMes)
+        if (rows.length > 25 && rows.length <= 33) {
+            for (count = rows.length; count <= 33; count++) {
+                rows.push(<th>__</th>);
+            }
+        } else if (rows.length >= 35) {
+            for (count = rows.length; count <= 40; count++) {
+                rows.push(<th>__</th>);
+            }
+        }
         return rows
     }
 
@@ -118,9 +127,16 @@ class Agendamento extends Component {
     }
 
     handlerHorario() {
-        console.log("aeeeeeee", this.state);
-        let data = '';
-        Api.salvarHorarioAmbiente(this.state)
+        Api.salvarHorarioAmbiente(this.state);
+    }
+
+    async buscarHorario() {
+        var result = await Api.buscarHorariosAmbiente();
+        this.setState({
+            ...this.state,
+            horarios: result.data.dados
+        });
+        console.log("dados", result.data.dados);
     }
 
     handlerDiaAgendamento(init, end, c) {
@@ -174,21 +190,26 @@ class Agendamento extends Component {
                         </div>
                         {this.state.laboratorio ?
                             <div className="row z-depth-1 center-align" id="agenda">
-
                                 <div className="blue lighten-4 center-align" id="cabecalho">
                                     <h1>{this.state.laboratorio.nome_ambiente}</h1>
                                     <h1>{this.converterMes(String(this.state.mesSelecionado))}/{this.state.ano} - {this.state.periodo}</h1>
                                 </div>
-                                <TableAgenda renderLinha={this.renderRowsDia().slice(0, 6)} />
-                                <TableAgenda renderLinha={this.renderRowsDia().slice(7, 13)} />
-                                <TableAgenda renderLinha={this.renderRowsDia().slice(14, 20)} />
-                                <TableAgenda renderLinha={this.renderRowsDia().slice(21, 27)} />
-                                <TableAgenda renderLinha={this.renderRowsDia().slice(28, 34)} />
-                                {this.renderRowsDia().length > 34 ? <TableAgenda renderLinha={this.renderRowsDia().slice(34, 40)} /> : ''}
+                                <TableAgenda renderLinha={this.renderRowsDia().slice(0, 6)}
+                                    horariosAgendados={this.state.horarios}/>
+                                <TableAgenda renderLinha={this.renderRowsDia().slice(7, 13)}
+                                    horariosAgendados={this.state.horarios} />
+                                <TableAgenda renderLinha={this.renderRowsDia().slice(14, 20)}
+                                    horariosAgendados={this.state.horarios} />
+                                <TableAgenda renderLinha={this.renderRowsDia().slice(21, 27)}
+                                    horariosAgendados={this.state.horarios} />
+                                <TableAgenda renderLinha={this.renderRowsDia().slice(28, 34)}
+                                    horariosAgendados={this.state.horarios} />
+                                {this.renderRowsDia().length > 34 ? <TableAgenda renderLinha={this.renderRowsDia().slice(34, 40)}
+                                    horariosAgendados={this.state.horarios} /> : ''}
                             </div>
                             : ''}
                     </div>
-                    
+
                     <ModalAgenda item={this.props.state}
                         onClick={() => { this.handlerHorario() }} />
                 </form>

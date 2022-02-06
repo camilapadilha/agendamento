@@ -6,7 +6,7 @@ const query = require('../util/db_util');
 module.exports = {
     buscar() {
         return new Promise((resolve, reject) => {
-            con.query("SELECT * FROM agenda a "
+            con.query("SELECT a.data_agendamento FROM agenda a "
                 + "INNER JOIN pessoa ps "
                 + "ON a.id_pessoa=ps.id_pessoa "
                 + "LEFT JOIN equipamento e "
@@ -32,7 +32,7 @@ module.exports = {
             VALUES ('${entidade.dia_semana}',${entidade.horario_aula},'${entidade.periodo}', 36, ${entidade.laboratorio.id_ambiente})`;
 
             query = con.query(sql, entidade, (err, rows, fields) => {
-                if (!err) {
+                if (!err) { 
                     resolve(rows);
                 }
                 else {
